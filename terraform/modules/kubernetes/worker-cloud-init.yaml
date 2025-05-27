@@ -1,0 +1,72 @@
+#cloud-config
+packages:
+  - curl
+users:
+  - name: worker
+    ssh-authorized-keys:
+      - ${var.ssh_public_key}
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+
+write_files:
+  - path: /master/.ssh/id_rsa
+    content: |
+      -----BEGIN OPENSSH PRIVATE KEY-----
+      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
+      -----END OPENSSH PRIVATE KEY-----
+    permissions: "0600"
+
+runcmd:
+  - apt-get update -y
+  - # wait for the master node to be ready by trying to connect to it
+  - until curl -k https://10.0.1.1:6443; do sleep 5; done
+  - # copy the token from the master node
+  - REMOTE_TOKEN=$(ssh -o StrictHostKeyChecking=accept-new cluster@10.0.1.1 sudo cat /var/lib/rancher/k3s/server/node-token)
+  - # Install k3s worker
+  - curl -sfL https://get.k3s.io | K3S_URL=https://10.0.1.1:6443 K3S_TOKEN=$REMOTE_TOKEN INSTALL_K3S_EXEC="--kubelet-arg cloud-provider=external" sh -
