@@ -8,11 +8,17 @@ terraform {
   }
 }
 
+# ssh key for accessing the Hetzner k8s nodes
+resource "hcloud_ssh_key" "main" {
+  name       = "k8s-ssh-key"
+  public_key = file("~/.ssh/id_ed25519.pub")
+}
+
 # Create kubernetes master node
 resource "hcloud_server" "master_node" {
-  name  = "master-node"
-  image = "ubuntu-24.04"
-
+  name        = "master-node"
+  image       = "ubuntu-24.04"
+  ssh_keys    = [hcloud_ssh_key.main.id]
   server_type = "cax11"
   location    = "fsn1"
   public_net {
@@ -24,8 +30,9 @@ resource "hcloud_server" "master_node" {
 
     ip = "10.0.1.1"
   }
-  user_data = file("${path.module}/master-cloud-init.yaml")
-  labels    = var.labels
+  user_data  = file("${path.module}/master-cloud-init.yaml")
+  labels     = var.labels
+  depends_on = [hcloud_ssh_key.main]
 }
 
 
@@ -35,6 +42,7 @@ resource "hcloud_server" "worker_nodes" {
   count       = 2
   name        = "worker-node-${count.index}"
   image       = "ubuntu-24.04"
+  ssh_keys    = [hcloud_ssh_key.main.id]
   server_type = "cax11"
   location    = "fsn1"
   public_net {
@@ -48,5 +56,8 @@ resource "hcloud_server" "worker_nodes" {
   user_data = file("${path.module}/worker-cloud-init.yaml")
   labels    = var.labels
 
-  depends_on = [hcloud_server.master_node]
+  depends_on = [hcloud_server.master_node, hcloud_ssh_key.main]
+  #lifecycle {
+  #  ignore_changes = [network[0].ip]
+  #}
 }

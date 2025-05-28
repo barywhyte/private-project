@@ -8,12 +8,6 @@ terraform {
   }
 }
 
-# ssh key for accessing the Hetzner k8s nodes
-resource "hcloud_ssh_key" "main" {
-  name       = "k8s-ssh-key"
-  public_key = file("~/.ssh/id_rsa.pub")
-}
-
 # Configure the Hetzner Cloud Provider
 provider "hcloud" {
   token = var.hcloud_token
