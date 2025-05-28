@@ -17,7 +17,7 @@ variable "ssh_public_key" {
 }
 
 
-#variable "worker_ssh_public_key" {
-#  type        = string
-#  description = "Public SSH key for accessing the Hetzner k8s nodes"
-#}
+variable "worker_ssh_public_key" {
+  type        = string
+  description = "Public SSH key for accessing the Hetzner k8s nodes"
+}
