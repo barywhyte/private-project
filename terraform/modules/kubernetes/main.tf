@@ -10,41 +10,43 @@ terraform {
 
 # Create kubernetes master node
 resource "hcloud_server" "master_node" {
-  name        = "master-node"
-  image       = "ubuntu-24.04"
+  name  = "master-node"
+  image = "ubuntu-24.04"
 
   server_type = "cax11"
   location    = "fsn1"
   public_net {
     ipv4_enabled = true
-    ipv6_enabled = true
+    ipv6_enabled = false
   }
   network {
     network_id = var.k8s_network_id
 
-    ip         = "10.0.1.1"
+    ip = "10.0.1.1"
   }
   user_data = file("${path.module}/master-cloud-init.yaml")
-  labels = var.labels
+  labels    = var.labels
 }
 
 
 
 # Create kubernetes worker node
 resource "hcloud_server" "worker_nodes" {
-  count = 2
+  count       = 2
   name        = "worker-node-${count.index}"
   image       = "ubuntu-24.04"
   server_type = "cax11"
   location    = "fsn1"
   public_net {
     ipv4_enabled = true
-    ipv6_enabled = true
+    ipv6_enabled = false
   }
   network {
     network_id = var.k8s_network_id
+    ip         = element(["10.0.1.3", "10.0.1.2"], count.index) # This is not idea but it stop terraform drift during plan and apply. Will fix later
   }
   user_data = file("${path.module}/worker-cloud-init.yaml")
+  labels    = var.labels
 
   depends_on = [hcloud_server.master_node]
 }
