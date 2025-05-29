@@ -58,20 +58,23 @@ The provisioning leverages **Terraform** to create and configure infrastructure 
 This repository contains a **worker-cloud-init.yaml** configuration to automatically boostrap worker nodes and join them to an existing k3s master node, forming a lightweight Kubernetes cluster.
 
 ## After successful Terraform deployment
-
+```
 - ssh  worker@worker-node-public-IP
 - sudo echo "WORKER NODE PRIVATE SSH KEY" >> ~/.ssh/id_ed25519 or just open with vi editor and paste shh key
 - MASTER_TOKEN=$(ssh -o StrictHostKeyChecking=accept-new master@10.0.1.1 sudo cat /var/lib/rancher/k3s/server/node-token)
 - curl -sfL https://get.k3s.io | K3S_URL=https://10.0.1.1:6443 K3S_TOKEN=$MASTER_TOKEN INSTALL_K3S_EXEC="--kubelet-arg cloud-provider=external" sh -
 - exit
+```
 
 ### Repeat same process for the second worker node etc
 
 ## On your local machine. Make sure to retrive master IP address from heztner console
+```
 - mkdir -p $HOME/.kube
 - scp -i ~/.ssh/id_ed25519 master@MASTER-NODE-PUBLIC-IP:/etc/rancher/k3s/k3s.yaml ~/.kube/config
 - sed -i 's|https://127.0.0.1:6443|https://MASTER-NODE-PUBLIC-IP:6443|g' ~/.kube/config
 - kubectl get nodes
+```
 
 ## Example output
 ```
