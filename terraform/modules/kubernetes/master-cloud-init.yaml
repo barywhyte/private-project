@@ -11,6 +11,7 @@ users:
     home: /home/master
     create_home: true
     ssh-authorized-keys:
+      - "${ssh_public_key}"
       - "${worker_ssh_public_key}"
 
 runcmd:

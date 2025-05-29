@@ -3,17 +3,26 @@ packages:
   - curl
 users:
   - name: worker
-    ssh-authorized-keys:
-      - "${var.ssh_public_key}"
+    ssh_authorized_keys:
+      - ${ssh_public_key}
     sudo: ALL=(ALL) NOPASSWD:ALL
     shell: /bin/bash
     groups: sudo
-    home: /home/worker
-    create_home: true
+    homedir: /home/worker
+
+
+write_files:
+  - path: /home/worker/.ssh/id_ed25519
+    owner: worker:worker
+    permissions: '0600'
+    encoding: base64
+    content: |
+      LS0tLS1CRUdJTiBPUEVOU1NIIFBSSVZBVEUgS0VZLS0tLS0KYjNCbGJuTnphQzFyWlhrdGRqRUFBQUFBQkc1dmJtVUFBQUFFYm05dVpRQUFBQUFBQUFBQkFBQUFNd0FBQUF0emMyZ3RaVwpReU5UVXhPUUFBQUNCdEJZRkZ0TnhkSitSMG1xbEk4N285S0FuVVFuMzJsTTZaUnVELzJxSzlOd0FBQUpBRWszRHlCSk53CjhnQUFBQXR6YzJndFpXUXlOVFV4T1FBQUFDQnRCWUZGdE54ZEorUjBtcWxJODdvOUtBblVRbjMybE02WlJ1RC8ycUs5TncKQUFBRUJkV3hvMUYyUFJXRENJTndYdHJkaVhFSC9EdlhML0h3L05pZDcrYlEyRi9HMEZnVVcwM0YwbjVIU2FxVWp6dWowbwpDZFJDZmZhVXpwbEc0UC9hb3IwM0FBQUFDM2R2Y210bGNpMXViMlJsQVFJPQotLS0tLUVORCBPUEVOU1NIIFBSSVZBVEUgS0VZLS0tLS0K
+
 
 runcmd:
   - apt-get update -y
   - until curl -k https://10.0.1.1:6443; do sleep 5; done
-  - bash -c 'curl -sfL https://get.k3s.io | K3S_URL=https://10.0.1.1:6443 K3S_TOKEN=$(ssh -o StrictHostKeyChecking=accept-new root@10.0.1.1 sudo cat /var/lib/rancher/k3s/server/node-token) INSTALL_K3S_EXEC="--kubelet-arg cloud-provider=external" sh -'
-  #- REMOTE_TOKEN=$(ssh -o StrictHostKeyChecking=accept-new root@10.0.1.1 sudo cat /var/lib/rancher/k3s/server/node-token)
-  #- curl -sfL https://get.k3s.io | K3S_URL=https://10.0.1.1:6443 K3S_TOKEN=$REMOTE_TOKEN INSTALL_K3S_EXEC="--kubelet-arg cloud-provider=external" sh -
+  - MASTER_TOKEN=$(ssh -o StrictHostKeyChecking=accept-new master@10.0.1.1 sudo cat /var/lib/rancher/k3s/server/node-token)
+  - curl -sfL https://get.k3s.io | K3S_URL=https://10.0.1.1:6443 K3S_TOKEN=$MASTER_TOKEN INSTALL_K3S_EXEC="--kubelet-arg cloud-provider=external" sh -
+  #- bash -c 'curl -sfL https://get.k3s.io | K3S_URL=https://10.0.1.1:6443 K3S_TOKEN=$(ssh -o StrictHostKeyChecking=accept-new master@10.0.1.1 sudo cat /var/lib/rancher/k3s/server/node-token) INSTALL_K3S_EXEC="--kubelet-arg cloud-provider=external" sh -'

@@ -10,7 +10,12 @@ terraform {
 
 locals {
   master_cloud_init = templatefile("${path.module}/master-cloud-init.yaml", {
+    ssh_public_key        = file("~/.ssh/id_ed25519.pub")
     worker_ssh_public_key = file("~/.ssh/id_ed25519_worker.pub")
+  })
+  worker_cloud_init = templatefile("${path.module}/worker-cloud-init.yaml", {
+    ssh_public_key  = file("~/.ssh/id_ed25519_worker.pub")
+    ssh_private_key = file("~/.ssh/id_ed25519_worker")
   })
 }
 
@@ -63,7 +68,7 @@ resource "hcloud_server" "worker_nodes" {
     network_id = var.k8s_network_id
     ip         = element(["10.0.1.3", "10.0.1.2"], count.index) # This is not idea but it stop terraform drift during plan and apply. Will fix later
   }
-  user_data = file("${path.module}/worker-cloud-init.yaml")
+  user_data = local.worker_cloud_init
   labels    = var.labels
 
   depends_on = [hcloud_server.master_node, hcloud_ssh_key.worker]
