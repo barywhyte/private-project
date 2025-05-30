@@ -31,3 +31,10 @@ spec:
                 name: api
                 port:
                   number: 80
+          - path: /argo
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 80
