@@ -8,11 +8,11 @@ spec:
 
   source:
     repoURL: https://github.com/barywhyte/private-project.git
-    targetRevision: HEAD
-    path: dev
+    targetRevision: operations
+    path: operations/k8s
   destination:
     server: https://kubernetes.default.svc
-    namespace: myapp
+    namespace: api
 
   syncPolicy:
     syncOptions:
