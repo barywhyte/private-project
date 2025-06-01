@@ -31,5 +31,5 @@ build_image:
     - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
 
   script:
-    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+    - docker buildx build --platform linux/arm64 -t $IMAGE_NAME:$IMAGE_TAG .
     - docker push "$IMAGE_NAME:$IMAGE_TAG"
