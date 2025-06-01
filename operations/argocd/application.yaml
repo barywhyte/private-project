@@ -4,8 +4,11 @@ metadata:
   name: api
   namespace: argocd
   annotations:
-    argocd-image-updater.argoproj.io/image-list: barywhyte/api
+    argocd-image-updater.argoproj.io/image-list: docker.io/barywhyte/api
     argocd-image-updater.argoproj.io/barywhyte-api.update-strategy: latest
+    #argocd-image-updater.argoproj.io/barywhyte-api.allow-tags: '.*'
+    argocd-image-updater.argoproj.io/barywhyte-api.allow-tags: regexp:^v1.0.0-[0-9a-zA-Z]+$
+    argocd-image-updater.argoproj.io/barywhyte-api.semver: "false"
     argocd-image-updater.argoproj.io/barywhyte-api.pull-secret: registrycredentials
     argocd-image-updater.argoproj.io/write-back-method: git
     argocd-image-updater.argoproj.io/git-branch: operations
