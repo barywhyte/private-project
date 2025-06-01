@@ -19,7 +19,7 @@ run_test:
 build_image:
   stage: build
   variables:
-    IMAGE_NAME: "barywhyte/api"
+    IMAGE_NAME: "docker.io/barywhyte/api"
     IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
     DOCKER_TLS_CERDIR: "/certs"
   image: "docker:28.2.2-cli"
