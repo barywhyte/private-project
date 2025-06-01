@@ -1,3 +1,4 @@
+# First job run test
 run_test:
   image: "python:3.11-slim"
   before_script:
@@ -7,3 +8,21 @@ run_test:
   script:
     - make test
     - pytest
+
+# Second job run build and pushimage
+build_image:
+  variables:
+    IMAGE_NAME: "barywhyte/api"
+    IMAGE_TAG: "v2"
+    DOCKER_TLS_CERDIR: "/certs"
+  image: "docker:28.2.2-cli"
+  services:
+    - docker:28.2.2-dind
+
+  before_script:
+    - docker info
+    - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
+
+  script:
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+    - docker push "$IMAGE_NAME:$IMAGE_TAG"
