@@ -6,11 +6,10 @@ metadata:
   annotations:
     argocd-image-updater.argoproj.io/image-list: barywhyte-api=docker.io/barywhyte/api
     argocd-image-updater.argoproj.io/barywhyte-api.update-strategy: newest-build
-    argocd-image-updater.argoproj.io/barywhyte-api.allow-tags: '.*'
-    #argocd-image-updater.argoproj.io/barywhyte-api.allow-tags: regexp:^[a-f0-9]{7,40}$
+    argocd-image-updater.argoproj.io/barywhyte-api.allow-tags: any
     argocd-image-updater.argoproj.io/barywhyte-api.semver: "false"
-    argocd-image-updater.argoproj.io/imagealias.platforms: linux/amd64,linux/arm64,linux/arm64/v8
-    argocd-image-updater.argoproj.io/barywhyte-api.pull-secret: registrycredentials
+    argocd-image-updater.argoproj.io/barywhyte-api.platforms: linux/amd64,linux/arm64,linux/arm64/v8
+    argocd-image-updater.argoproj.io/barywhyte-api.pull-secret: argocd/registrycredentials
     argocd-image-updater.argoproj.io/write-back-method: git
     argocd-image-updater.argoproj.io/git-branch: operations
 spec:
