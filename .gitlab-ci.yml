@@ -1,5 +1,11 @@
+stages:
+  - test
+  - build
+
+
 # First job run test
 run_test:
+  stage: test
   image: "python:3.11-slim"
   before_script:
     - apt-get update && apt-get install -y make
@@ -9,8 +15,9 @@ run_test:
     - make test
     - pytest
 
-# Second job run build and pushimage
+# Second job run build and push image
 build_image:
+  stage: build
   variables:
     IMAGE_NAME: "barywhyte/api"
     IMAGE_TAG: "v2"
