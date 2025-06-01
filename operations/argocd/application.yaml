@@ -5,7 +5,10 @@ metadata:
   namespace: argocd
   annotations:
     argocd-image-updater.argoproj.io/image-list: barywhyte/api
-    argocd-image-updater.argoproj.io/barywhyte/api.update-strategy: latest
+    argocd-image-updater.argoproj.io/barywhyte-api.update-strategy: latest
+    argocd-image-updater.argoproj.io/barywhyte-api.pull-secret: registrycredentials
+    argocd-image-updater.argoproj.io/write-back-method: git
+    argocd-image-updater.argoproj.io/git-branch: operations
 spec:
   project: default
 
