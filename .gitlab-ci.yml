@@ -1,0 +1,9 @@
+run_test:
+  image: "python:3.11-slim"
+  before_script:
+    - apt-get update && apt-get install -y make
+    - pip install -r requirements.txt
+
+  script:
+    - make test
+    - pytest
