@@ -20,7 +20,7 @@ build_image:
   stage: build
   variables:
     IMAGE_NAME: "barywhyte/api"
-    IMAGE_TAG: "v2"
+    IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
     DOCKER_TLS_CERDIR: "/certs"
   image: "docker:28.2.2-cli"
   services:
