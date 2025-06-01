@@ -7,7 +7,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/barywhyte/private-project.git
+    repoURL: https://gitlab.com/barywhyte/private-pro.git
     targetRevision: operations
     path: operations/k8s
   destination:
