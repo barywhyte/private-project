@@ -8,8 +8,12 @@ spec:
 
   source:
     repoURL: https://gitlab.com/barywhyte/private-pro.git
+    #repoURL: https://github.com/barywhyte/private-project.git
     targetRevision: operations
     path: operations/k8s
+    helm:
+      valueFiles:
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: api

@@ -1,4 +1,7 @@
 #!/bin/bash
+# Install argocd and argocd-image-updater
+kubectl apply -f https://raw.githubusercontent.com/argoproj-labs/argocd-image-updater/stable/manifests/install.yaml -n argocd
+
 helm repo add argo https://argoproj.github.io/argo-helm
 helm repo update
 

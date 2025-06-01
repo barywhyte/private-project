@@ -3,7 +3,7 @@ replicaCount: 3
 
 image:
   repository: barywhyte/api
-  tag: v2
+  tag: "latest"
 
 imagePullSecret: registrycredentials
 containerPort: 8000
