@@ -2,8 +2,8 @@ namespace: api
 replicaCount: 3
 
 image:
-  repository: barywhyte/api
-  tag: "latest"
+  repository: docker.io/barywhyte/api
+  tag: latest
 
 imagePullSecret: registrycredentials
 containerPort: 8000
