@@ -13,6 +13,8 @@ spec:
       labels:
         app: api
     spec:
+      imagePullSecrets:
+        - name: registrycredentials
       containers:
         - name: api
           image: barywhyte/api:v2
