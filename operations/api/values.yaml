@@ -8,6 +8,18 @@ image:
 imagePullSecret: registrycredentials
 containerPort: 8000
 
+readinessProbe:
+  path: /health
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  failureThreshold: 3
+
+livenessProbe:
+  path: /health
+  initialDelaySeconds: 15
+  periodSeconds: 20
+  failureThreshold: 5
+
 service:
   port: 80
   targetPort: 8000
