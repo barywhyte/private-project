@@ -9,7 +9,7 @@ imagePullSecret: registrycredentials
 containerPort: 8000
 
 readinessProbe:
-  path: /health
+  path: /info
   initialDelaySeconds: 5
   periodSeconds: 10
   failureThreshold: 3
