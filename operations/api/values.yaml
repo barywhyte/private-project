@@ -9,7 +9,7 @@ imagePullSecret: registrycredentials
 containerPort: 8000
 
 readinessProbe:
-  path: /info
+  path: /health
   initialDelaySeconds: 5
   periodSeconds: 10
   failureThreshold: 3
@@ -19,6 +19,9 @@ livenessProbe:
   initialDelaySeconds: 15
   periodSeconds: 20
   failureThreshold: 5
+  httpHeaders:
+    - name: Host
+      value: barywhyt.duckdns.org
 
 service:
   port: 80
