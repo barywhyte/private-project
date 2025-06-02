@@ -19,7 +19,7 @@ spec:
     repoURL: https://gitlab.com/barywhyte/private-pro.git
     #repoURL: https://github.com/barywhyte/private-project.git
     targetRevision: operations
-    path: operations/api
+    path: operations/
     helm:
       valueFiles:
         - values.yaml
