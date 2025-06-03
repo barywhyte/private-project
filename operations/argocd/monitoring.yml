@@ -6,13 +6,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://prometheus-community.github.io/helm-charts
-    chart: kube-prometheus-stack
-    targetRevision: 72.9.0  # You can update this to latest chart version
+    repoURL: https://gitlab.com/barywhyte/private-pro.git
+    targetRevision: operations
+    path: operations/monitoring
     helm:
-      releaseName: monitoring
-      values: |
-        fullnameOverride: monitoring
+      valueFiles:
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
