@@ -1,4 +1,4 @@
-nameOverride: api
+fullnameOverride: api
 namespace: api
 replicaCount: 3
 
