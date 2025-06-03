@@ -1,0 +1,49 @@
+namespace: api
+replicaCount: 3
+
+image:
+  repository: docker.io/barywhyte/api
+  tag: latest
+
+imagePullSecret: registrycredentials
+containerPort: 8000
+
+readinessProbe:
+  enabled: false
+  path: /health
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  failureThreshold: 3
+
+livenessProbe:
+  enabled: false
+  path: /health
+  initialDelaySeconds: 15
+  periodSeconds: 20
+  failureThreshold: 5
+  httpHeaders:
+    - name: Host
+      value: barywhyt.duckdns.org
+
+service:
+  port: 80
+  targetPort: 8000
+  type: ClusterIP
+
+ingress:
+  clusterIssuer: letsencrypt-prod
+  class: nginx
+  forceSSLRedirect: "true"
+  host: barywhyt.duckdns.org
+  tlsSecret: barywhyt-tls
+  paths:
+    - path: /health
+      port: 80
+    - path: /info
+      port: 80
+
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80

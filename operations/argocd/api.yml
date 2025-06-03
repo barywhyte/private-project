@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: api-app
+  namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: barywhyte-api=docker.io/barywhyte/api
+    argocd-image-updater.argoproj.io/barywhyte-api.update-strategy: newest-build
+    argocd-image-updater.argoproj.io/barywhyte-api.allow-tags: any
+    argocd-image-updater.argoproj.io/barywhyte-api.semver: "false"
+    argocd-image-updater.argoproj.io/barywhyte-api.platforms: linux/amd64,linux/arm64,linux/arm64/v8
+    argocd-image-updater.argoproj.io/barywhyte-api.pull-secret: argocd/registrycredentials
+    argocd-image-updater.argoproj.io/write-back-method: git
+    argocd-image-updater.argoproj.io/git-branch: operations
+spec:
+  project: default
+
+  source:
+    repoURL: https://gitlab.com/barywhyte/private-pro.git
+    #repoURL: https://github.com/barywhyte/private-project.git
+    targetRevision: operations
+    path: operations/api
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: api
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
+
