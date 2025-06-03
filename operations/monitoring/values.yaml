@@ -4,6 +4,7 @@
 
 ## Provide a name in place of kube-prometheus-stack for `app:` labels
 ##
+
 nameOverride: ""
 
 ## Override the deployment namespace
@@ -20,11 +21,13 @@ kubeVersionOverride: ""
 
 ## Provide a name to substitute for the full names of resources
 ##
-fullnameOverride: ""
+fullnameOverride: "monitoring"
 
 ## Labels to apply to all resources
 ##
-commonLabels: {}
+commonLabels: {
+  app.kubernetes.io/instance: monitoring
+}
 # scmhash: abc123
 # myLabel: aakkmd
 
