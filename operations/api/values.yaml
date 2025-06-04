@@ -29,6 +29,7 @@ livenessProbe:
 service:
   port: 80
   targetPort: 8000
+  name: http
   type: ClusterIP
 
 ingress:
