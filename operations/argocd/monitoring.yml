@@ -27,6 +27,10 @@ spec:
               - secretName: grafana-tls
                 hosts:
                   - barygrafana.duckdns.org
+          grafana.ini:
+            server:
+              root_url: https://barygrafana.duckdns.org
+              serve_from_sub_path: false
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
