@@ -50,7 +50,7 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true     # To fix Resource is too big to fit in 262144 bytes allowed annotation size.
-      - ApplyOutOfSyncOnly=true  # Only apply resources that are out of sync
+      #- ApplyOutOfSyncOnly=true  # Only apply resources that are out of sync
     automated:
       prune: true
-      selfHeal: true
+      selfHeal: false
