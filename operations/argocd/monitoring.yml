@@ -53,4 +53,4 @@ spec:
       #- ApplyOutOfSyncOnly=true  # Only apply resources that are out of sync
     automated:
       prune: true
-      selfHeal: false
+      selfHeal: true
