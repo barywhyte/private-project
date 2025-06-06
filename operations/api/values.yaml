@@ -56,7 +56,7 @@ serviceMonitor:
   targetNamespace: api
   release: monitoring
   port: http
-  path: /info/metrics
+  path: /metrics
   interval: 15s
   selectorLabels:
     app: api
