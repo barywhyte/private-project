@@ -33,24 +33,13 @@ spec:
               serve_from_sub_path: false
         prometheus:
           prometheusSpec:
-            podMonitorNamespaceSelector:
-              matchExpressions:
-                - key: kubernetes.io/metadata.name
-                  operator: Exists
-            podMonitorSelector: {}
-            podMonitorSelectorNilUsesHelmValues: false
-            ruleNamespaceSelector:
-              matchExpressions:
-                - key: kubernetes.io/metadata.name
-                  operator: Exists
-            ruleSelector: {}
-            ruleSelectorNilUsesHelmValues: false
+            serviceMonitorSelector:
+              matchLabels:
+                release: kube-prometheus-stack
             serviceMonitorNamespaceSelector:
-              matchExpressions:
-                - key: kubernetes.io/metadata.name
-                  operator: Exists
-            serviceMonitorSelector: {}
-            serviceMonitorSelectorNilUsesHelmValues: false
+              matchNames:
+                - api
+                - monitoring
 
   destination:
     server: https://kubernetes.default.svc
