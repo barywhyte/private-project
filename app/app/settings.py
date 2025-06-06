@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-)e+0p_0e-^#c4-+$p1zq)u_-wmaorgx0k^_3ci)r25s%%z#8y+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['barywhyt.duckdns.org', 'api', 'api.api.svc', 'api.api.svc.cluster.local', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
+#ALLOWED_HOSTS = ['barywhyt.duckdns.org', 'api', 'api.api.svc', 'api.api.svc.cluster.local', 'localhost', '127.0.0.1']
 
 
 # Application definition
