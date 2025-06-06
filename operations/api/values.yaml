@@ -49,3 +49,15 @@ hpa:
   minReplicas: 2
   maxReplicas: 5
   targetCPUUtilizationPercentage: 80
+
+serviceMonitor:
+  enabled: true
+  namespace: monitoring
+  targetNamespace: api
+  release: monitoring
+  port: http
+  path: /metrics
+  interval: 15s
+  selectorLabels:
+    app: api
+
