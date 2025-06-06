@@ -33,9 +33,14 @@ spec:
               serve_from_sub_path: false
         prometheus:
           prometheusSpec:
-            serviceMonitorNamespaceSelector:
-              matchLabels:
-                namespace: api
+            serviceMonitorNamespaceSelector: {}
+            serviceMonitorSelector: {}
+            podMonitorNamespaceSelector: {}
+            podMonitorSelector: {}
+            probeNamespaceSelector: {}
+            probeSelector: {}
+            scrapeConfigNamespaceSelector: {}
+            scrapeConfigSelector: {}
 
 
   destination:
