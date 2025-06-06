@@ -4,7 +4,8 @@ metadata:
   name: api-app-monitor
   namespace: monitoring   # Prometheus watches this namespace for ServiceMonitors
   labels:
-    release: kube-prometheus-stack
+    #release: kube-prometheus-stack
+    release: monitoring
 spec:
   selector:
     matchLabels:
