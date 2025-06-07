@@ -62,7 +62,11 @@ serviceMonitor:
     app: api
 
 namespaceDeveloper:
-  user: dev-user
+  users:
+    - dev-user
+    - tester
 
 clusterAuditor:
-  user: audit-user
+  users:
+    - audit-user1
+    - audit-user2

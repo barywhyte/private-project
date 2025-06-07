@@ -2,10 +2,13 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: cluster-auditor-binding
+
 subjects:
+{{- range .Values.namespaceDeveloper.users }}
   - kind: User
-    name: {{ .Values.clusterAuditor.user }}
+    name: {{ . }}
     apiGroup: rbac.authorization.k8s.io
+{{- end }}
 roleRef:
   kind: ClusterRole
   name: cluster-auditor
