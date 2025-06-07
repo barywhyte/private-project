@@ -4,7 +4,7 @@ metadata:
   name: cluster-auditor-binding
 
 subjects:
-{{- range .Values.namespaceDeveloper.users }}
+{{- range .Values.clusterAuditor.users }}
   - kind: User
     name: {{ . }}
     apiGroup: rbac.authorization.k8s.io
