@@ -3,8 +3,8 @@ from django.shortcuts import render
 from django.http import JsonResponse
 
 def health(request):
-    return JsonResponse({"status": "okay"})
+    return JsonResponse({"status": "all good!"})
 
 def info(request):
-    return JsonResponse({"app": "Django API", "version": "1.4.0"})
+    return JsonResponse({"app": "Django API", "version": "1.5.0"})
 
