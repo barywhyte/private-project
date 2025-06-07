@@ -1,5 +1,5 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: {{ .Chart.Name }}
   namespace: {{ .Values.namespace }}
@@ -40,3 +40,15 @@ spec:
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
             failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
           {{- end }}
+
+    strategy:
+    canary:
+      steps:
+        - setWeight: 50
+        - pause: { duration: 30s }
+        - analysis:
+            templates:
+              - templateName: health-check-analysis
+        - setWeight: 100
+      maxSurge: 1
+      maxUnavailable: 0

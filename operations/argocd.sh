@@ -17,3 +17,7 @@ helm upgrade --install argocd argo/argo-cd \
   --set server.ingress.annotations."nginx\.ingress\.kubernetes\.io/ssl-passthrough"="true" \
   --set server.ingress.annotations."cert-manager\.io/cluster-issuer"=letsencrypt-prod \
   --set server.ingress.tls=true
+
+# Install argocd-rollouts
+kubectl create namespace argo-rollouts
+kubectl apply -n argo-rollouts -f https://github.com/argoproj/argo-rollouts/releases/latest/download/install.yaml
