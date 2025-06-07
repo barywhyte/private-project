@@ -1,0 +1,30 @@
+# Apply Network policy to restrict traffic to the application
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ .Chart.Name }}-ingress-policy
+  namespace: {{ .Values.namespace }}
+spec:
+  podSelector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        # Allow traffic from Ingress Controller
+        - namespaceSelector:
+            matchLabels:
+              name: ingress-nginx
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: ingress-nginx
+      ports:
+        - protocol: TCP
+          port: {{ .Values.service.port }}
+    - from:
+        # Allow from same namespace (internal traffic)
+        - podSelector: {}
+      ports:
+        - protocol: TCP
+          port: {{ .Values.service.port }}
