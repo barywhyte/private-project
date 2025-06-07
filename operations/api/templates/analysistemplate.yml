@@ -6,8 +6,11 @@ metadata:
 spec:
   metrics:
     - name: health-check
+      interval: 30s
+      count: 5
+      FailureLimit: 2
       successCondition: result == true
       provider:
         web:
           url: http://{{ .Chart.Name }}.{{ .Values.namespace }}.svc.cluster.local:{{ .Values.service.targetPort }}/health
-          timeout: 10s
+          timeout: 10
