@@ -61,3 +61,8 @@ serviceMonitor:
   selectorLabels:
     app: api
 
+api-dev:
+  user: dev-user
+
+clusterAuditor:
+  user: audit-user
