@@ -61,7 +61,7 @@ serviceMonitor:
   selectorLabels:
     app: api
 
-api-dev:
+namespaceDeveloper:
   user: dev-user
 
 clusterAuditor:
