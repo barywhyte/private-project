@@ -8,7 +8,7 @@ spec:
     - name: health-check
       interval: 30s
       count: 5
-      FailureLimit: 3
+      failureLimit: 3
       successCondition: result == true
       provider:
         web:
