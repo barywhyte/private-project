@@ -9,9 +9,13 @@ spec:
       interval: 30s
       count: 5
       failureLimit: 3
-      successCondition: result == true
+      successCondition: result > 0.95
       provider:
-        web:
-          #url: http://{{ .Chart.Name }}.{{ .Values.namespace }}.svc.cluster.local:{{ .Values.service.targetPort }}/health
-          url: https://barywhyt.duckdns.org/health
-          timeout: 10
+        prometheus:
+          address: http://monitoring-kube-prometheus-prometheus.monitoring:9090
+          query: |
+            1 - (
+              sum(rate(django_http_requests_total_by_view_transport_method_total{status=~"5.."}[1m]))
+              /
+              sum(rate(django_http_requests_total_by_view_transport_method_total[1m]))
+            )
