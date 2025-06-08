@@ -12,5 +12,6 @@ spec:
       successCondition: result == true
       provider:
         web:
-          url: http://{{ .Chart.Name }}.{{ .Values.namespace }}.svc.cluster.local:{{ .Values.service.targetPort }}/health
+          #url: http://{{ .Chart.Name }}.{{ .Values.namespace }}.svc.cluster.local:{{ .Values.service.targetPort }}/health
+          url: https://barywhyt.duckdns.org/health
           timeout: 10
