@@ -9,13 +9,13 @@ spec:
       interval: 30s
       count: 5
       failureLimit: 3
-      successCondition: result > 0.95
+      successCondition: result > 90
       provider:
         prometheus:
           address: http://monitoring-kube-prometheus-prometheus.monitoring:9090
           query: |
-            1 - (
-              sum(rate(django_http_requests_total_by_view_transport_method_total{status=~"5.."}[1m]))
+            (
+              sum by () (rate(django_http_responses_total_by_status_total{status="200"}[5m]))
               /
-              sum(rate(django_http_requests_total_by_view_transport_method_total[1m]))
-            )
+              sum by () (rate(django_http_responses_total_by_status_total[5m]))
+            ) * 100
