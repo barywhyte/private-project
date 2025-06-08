@@ -11,7 +11,7 @@ containerPort: 8000
 
 readinessProbe:
   enabled: true
-  path: /health
+  path: /non-existing-path # This path is intentionally incorrect to simulate a failure
   initialDelaySeconds: 5
   periodSeconds: 10
   failureThreshold: 3
