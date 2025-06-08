@@ -43,7 +43,7 @@ GitLab CI builds, pushes images, and optionally triggers ArgoCD sync.
 # 1. Provision Infrastructure & Kubernetes
 
 # Navigate to infra branch
-git checkout infra
+`git checkout infra`
 
 # Initialize and apply Terraform (requires valid cloud provider credentials)
 ```
@@ -52,7 +52,7 @@ terraform init
 terraform apply
 ```
 
-Cloud-init automatically bootstraps the master node and joins workers to form the K3s cluster. If this fails, see https://gitlab.com/barywhyte/private-pro/-/blob/infra/README.md?ref_type=heads for help.
+Cloud-init automatically bootstraps the master node and joins workers to form the K3s cluster. If this fails, see [Infra Branch README](https://gitlab.com/barywhyte/private-pro/-/blob/infra/README.md?ref_type=heads) for help.
 
 # 2. Install Base Cluster Addons (cert-manager, ingress-nginx)
 ```
@@ -117,3 +117,19 @@ operations/api/templates/
 
 
 # Branch Overview
+
+| Branch      | Purpose                                                                                                                                      |
+|-------------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| `infra`     | Contains Terraform code for provisioning VMs, cloud-init scripts for K3s setup, cert-manager and ingress-nginx installation.                |
+| `main`      | Stores the Django application code, Dockerfile, GitLab CI/CD pipeline configuration, and application Helm chart.                            |
+| `operations`| Hosts all ArgoCD-related Helm charts, including the app-of-apps setup and monitoring stack (e.g., Prometheus).                              |
+
+
+# Exposed Applications Endpoints
+```
+https://barywhyt.duckdns.org/info
+https://barywhyt.duckdns.org/health
+```
+
+# Continuous Delivery Platform (Argocd)
+`https://argocdbary.duckdns.org` Requires authentication
