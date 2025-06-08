@@ -5,6 +5,7 @@ metadata:
   namespace: {{ .Values.namespace }}
 spec:
   revisionHistoryLimit: 2
+  progressDeadlineSeconds: 60  # force rollback when pods aren't ready in 60 seconds
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
