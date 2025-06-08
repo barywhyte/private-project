@@ -2,12 +2,7 @@
 
 This repository implements a full GitOps-based environment with declarative infrastructure provisioning, K3s-powered Kubernetes, automated CI/CD, RBAC, and monitoring — all managed with Helm and ArgoCD.
 
----
-
-## 📐 Architecture Overview
-
-```mermaid
-graph TD
+```
   A[Terraform (Infra Branch)] --> B[K3s Cluster: 1 Master, 2 Workers]
   B --> C[Cert Manager]
   B --> D[Ingress NGINX]
@@ -17,6 +12,7 @@ graph TD
   E --> H[Prometheus Monitoring]
   G --> I[Network Policies & RBAC]
   G --> J[CI/CD via GitLab Pipeline]
+  ```
 
 Master Node boots K3s via cloud-init and registers worker nodes.
 
@@ -26,7 +22,7 @@ ArgoCD pulls and applies all application and infra Helm charts (no kubectl apply
 
 GitLab CI builds, pushes images, and optionally triggers ArgoCD sync.
 
-### Tools Used & Justifications
+# Tools Used & Justifications
 
 | Tool             | Purpose                                     | Justification                                                                      |
 |------------------|---------------------------------------------|-------------------------------------------------------------------------------     |
@@ -44,12 +40,12 @@ GitLab CI builds, pushes images, and optionally triggers ArgoCD sync.
 
 
 # Setup Instructions
-## 1. Provision Infrastructure & Kubernetes
+# 1. Provision Infrastructure & Kubernetes
 
-## Navigate to infra branch
+# Navigate to infra branch
 git checkout infra
 
-## Initialize and apply Terraform (requires valid cloud provider credentials)
+# Initialize and apply Terraform (requires valid cloud provider credentials)
 ```
 cd terraform
 terraform init
@@ -58,7 +54,7 @@ terraform apply
 
 Cloud-init automatically bootstraps the master node and joins workers to form the K3s cluster. If this fails, see https://gitlab.com/barywhyte/private-pro/-/blob/infra/README.md?ref_type=heads for help.
 
-## 2. Install Base Cluster Addons (cert-manager, ingress-nginx)
+# 2. Install Base Cluster Addons (cert-manager, ingress-nginx)
 ```
  Install cert-manager
 cd ../cert-manager
@@ -68,7 +64,7 @@ bash install.sh
 cd ../ingress-nginx
 bash install.sh
 ```
-## 3. Deploy ArgoCD & Applications
+# 3. Deploy ArgoCD & Applications
 ```
 # Checkout operations branch
 git checkout operations
@@ -85,7 +81,7 @@ This will deploy:
 
     Any RBAC/NetworkPolicy configurations.
 
-## 4. Configure RBAC Policies
+# 4. Configure RBAC Policies
 ```
 RBAC templates live in:
 operations/api/templates/
@@ -99,7 +95,7 @@ operations/api/templates/
     api-dev-binding.yaml
 ```
 
-## 5. Set Up CI/CD Pipeline (Main Branch)
+# 5. Set Up CI/CD Pipeline (Main Branch)
 
      Trigger pipeline with any push to main.
     .gitlab-ci.yml handles:
@@ -111,7 +107,7 @@ operations/api/templates/
         Push triggers ArgoCD webhook sync
 
 
-## 6. Accessing the Monitoring Stack
+# 6. Accessing the Monitoring Stack
 
     Prometheus/Grafana is deployed via ArgoCD from monitoring.yml.
 
@@ -120,10 +116,4 @@ operations/api/templates/
     Requires ingress setup and valid TLS from cert-manager.
 
 
-### Branch Overview
-
-| Branch Name | Purpose                                                                                      | Key Components                                                                                         |
-|-------------|----------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
-| **infra**   | Infrastructure provisioning with Terraform and bootstrap setup for Kubernetes cluster       | - `terraform/` for VMs and networking<br>- `cert-manager/` and `ingress-nginx/` Helm installations     |
-| **main**    | Django application codebase and CI pipeline definitions                                      | - `app/` (Django app)<br>- `Dockerfile` and `Makefile`<br>- `operations/app/templates/ingress.yml`     |
-| **operations** | ArgoCD GitOps deployment and cluster-wide operational components                           | - `argocd/` (root app, monitoring, ArgoCD apps)<br>- `operations/api/` Helm chart for the Django app   |
+# Branch Overview
