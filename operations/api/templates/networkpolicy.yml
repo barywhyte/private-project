@@ -1,4 +1,5 @@
 # Apply Network policy to restrict traffic to the application
+{{- if .Values.networkPolicy.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -21,7 +22,6 @@ spec:
               app.kubernetes.io/name: ingress-nginx
               app.kubernetes.io/component: controller
               app.kubernetes.io/instance: ingress-nginx
-
       ports:
         - protocol: TCP
           port: {{ .Values.service.port }}
@@ -31,3 +31,5 @@ spec:
       ports:
         - protocol: TCP
           port: {{ .Values.service.port }}
+{{- end }}
+

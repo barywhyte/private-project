@@ -80,3 +80,6 @@ clusterAuditor:
   users:
     - audit-user1
     - audit-user2
+
+networkPolicy:
+  enabled: false
