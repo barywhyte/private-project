@@ -27,9 +27,10 @@ spec:
           port: {{ .Values.service.port }}
     - from:
         # Allow from same namespace (internal traffic)
-        - podSelector: {}
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ .Values.namespace }}
       ports:
         - protocol: TCP
           port: {{ .Values.service.port }}
 {{- end }}
-
