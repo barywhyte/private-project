@@ -24,7 +24,7 @@ spec:
               app.kubernetes.io/instance: ingress-nginx
       ports:
         - protocol: TCP
-          port: {{ .Values.service.port }}
+          port: {{ .Values.service.targetPort }}
     - from:
         # Allow from same namespace (internal traffic)
         - namespaceSelector:
@@ -32,5 +32,5 @@ spec:
               kubernetes.io/metadata.name: {{ .Values.namespace }}
       ports:
         - protocol: TCP
-          port: {{ .Values.service.port }}
+          port: {{ .Values.service.targetPort }}
 {{- end }}
