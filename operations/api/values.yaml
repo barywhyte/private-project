@@ -82,4 +82,4 @@ clusterAuditor:
     - audit-user2
 
 networkPolicy:
-  enabled: false
+  enabled: true
