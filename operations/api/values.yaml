@@ -10,14 +10,14 @@ imagePullSecret: registrycredentials
 containerPort: 8000
 
 readinessProbe:
-  enabled: true
+  enabled: false
   path: /health
   initialDelaySeconds: 5
   periodSeconds: 10
   failureThreshold: 3
 
 livenessProbe:
-  enabled: true
+  enabled: false
   path: /health
   initialDelaySeconds: 15
   periodSeconds: 20
