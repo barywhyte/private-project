@@ -51,6 +51,7 @@ spec:
               cpu: "{{ .Values.resources.limits.cpu }}"
   strategy:
     canary:
+      abortScaleDownDelaySeconds: 30
       steps:
         - setWeight: 50
         - pause: { duration: 30s }
