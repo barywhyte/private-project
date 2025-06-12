@@ -12,7 +12,6 @@ run_test:
     - pip install -r requirements.txt
 
   script:
-    - make test
     - pytest
 
 # Second job run build and push image
