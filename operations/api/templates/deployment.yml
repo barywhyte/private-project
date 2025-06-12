@@ -52,7 +52,7 @@ spec:
     blueGreen:
       activeService: {{ .Chart.Name }}
       previewService: {{ .Chart.Name }}-preview
-      autoPromotionEnabled: true
+      autoPromotionEnabled: false
       autoPromotionSeconds: 30
       prePromotionAnalysis:
         templates:
