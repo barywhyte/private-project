@@ -4,8 +4,7 @@ metadata:
   name: {{ .Chart.Name }}
   namespace: {{ .Values.namespace }}
 spec:
-  revisionHistoryLimit: 2
-  progressDeadlineSeconds: 60
+  revisionHistoryLimit: 5
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
