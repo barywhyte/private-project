@@ -6,9 +6,9 @@ metadata:
 spec:
   metrics:
     - name: health-check
-      #interval: 30s
-      #count: 3
-      #failureLimit: 2
+      interval: 30s
+      count: 3
+      failureLimit: 2
       successCondition: result == 0
       provider:
          job:
@@ -24,9 +24,6 @@ spec:
                         "if curl -sf http://api/health; then exit 0; else exit 1; fi"
                       ]
                 restartPolicy: Never
-          interval: 30s
-          count: 3
-          failureLimit: 1
         #prometheus:
         #  address: http://monitoring-kube-prometheus-prometheus.monitoring:9090
         #  query: |
