@@ -49,13 +49,12 @@ spec:
               cpu: "{{ .Values.resources.limits.cpu }}"
 
   strategy:
-    canary:
-      analysis:
+    blueGreen:
+      activeService: {{ .Values.service.name }}
+      previewService: {{ .Values.service.name }}-preview
+      autoPromotionEnabled: true
+      autoPromotionSeconds: 30
+      prePromotionAnalysis:
         templates:
-          - templateName: health-check-analysis   # << background analysis attached
-      steps:
-        - setWeight: 50
-        - pause: { duration: 30s }
-        - setWeight: 100
-      maxSurge: 1
-      maxUnavailable: 0
+          - templateName: health-check-analysis
+      scaleDownDelaySeconds: 30
