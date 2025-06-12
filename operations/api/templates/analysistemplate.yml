@@ -8,7 +8,7 @@ spec:
     - name: health-check
       #interval: 30s
       #count: 3
-      failureLimit: 2
+      failureLimit: 1
       successCondition: result == 0
       provider:
          job:
