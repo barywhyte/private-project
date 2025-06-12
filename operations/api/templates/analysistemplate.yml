@@ -6,13 +6,14 @@ metadata:
 spec:
   metrics:
     - name: health-check
-      interval: 30s
-      count: 3
-      failureLimit: 2
+      #interval: 30s
+      #count: 3
+      #failureLimit: 2
       successCondition: result == 0
       provider:
          job:
           spec:
+            backoffLimit: 1
             template:
               spec:
                 containers:
