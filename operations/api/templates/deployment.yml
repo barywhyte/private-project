@@ -50,8 +50,8 @@ spec:
 
   strategy:
     blueGreen:
-      activeService: {{ .Values.service.name }}
-      previewService: {{ .Values.service.name }}-preview
+      activeService: {{ .Chart.Name }}
+      previewService: {{ .Chart.Name }}-preview
       autoPromotionEnabled: true
       autoPromotionSeconds: 30
       prePromotionAnalysis:
