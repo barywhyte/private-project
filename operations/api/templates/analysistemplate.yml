@@ -9,21 +9,16 @@ spec:
       #interval: 30s
       #count: 3
       failureLimit: 1
-      successCondition: result == 0
+      successCondition: result == 200
       provider:
-         job:
+        job:
           spec:
-            backoffLimit: 1
             template:
               spec:
                 containers:
-                  - name: health
-                    image: curlimages/curl:latest
-                    command:
-                      [
-                        "sh", "-c",
-                        "if curl -sf http://api/health; then exit 0; else exit 1; fi"
-                      ]
+                  - name: check
+                    image: curlimages/curl
+                    command: ["curl", "-s", "-o", "/dev/null", "-w", "%{http_code}", "http://{{ .Chart.Name }}-preview/health"]
                 restartPolicy: Never
         #prometheus:
         #  address: http://monitoring-kube-prometheus-prometheus.monitoring:9090

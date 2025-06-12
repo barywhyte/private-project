@@ -53,12 +53,13 @@ spec:
       activeService: {{ .Chart.Name }}
       previewService: {{ .Chart.Name }}-preview
       autoPromotionEnabled: false
-      autoPromotionSeconds: 30  # Auto-promote if healthy
-      scaleDownDelaySeconds: 600  # Safety window for rollbacks
+      scaleDownDelayRevisionLimit: 2  # Keep last 2 revisions for rollback
+
+
       # Add both pre and post promotion analysis
-      #prePromotionAnalysis:
-      #  templates:
-      #    - templateName: health-check-analysis
-      #postPromotionAnalysis:  # REQUIRED for rollback after traffic switch
-      #  templates:
-      #    - templateName: health-check-analysis
+      prePromotionAnalysis:
+        templates:
+          - templateName: health-check-analysis
+      postPromotionAnalysis:  # REQUIRED for rollback after traffic switch
+        templates:
+          - templateName: health-check-analysis
