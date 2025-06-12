@@ -5,12 +5,11 @@ metadata:
   namespace: {{ .Values.namespace }}
 spec:
   revisionHistoryLimit: 2
-  progressDeadlineSeconds: 60  # force rollback when pods aren't ready in 60 seconds
+  progressDeadlineSeconds: 60
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: {{ .Chart.Name }}
-
   template:
     metadata:
       labels:
@@ -41,7 +40,6 @@ spec:
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
             failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
           {{- end }}
-
           resources:
             requests:
               memory: "{{ .Values.resources.requests.memory }}"
@@ -49,15 +47,15 @@ spec:
             limits:
               memory: "{{ .Values.resources.limits.memory }}"
               cpu: "{{ .Values.resources.limits.cpu }}"
+
   strategy:
     canary:
-      abortScaleDownDelaySeconds: 30
+      analysis:
+        templates:
+          - templateName: health-check-analysis   # << background analysis attached
       steps:
         - setWeight: 50
         - pause: { duration: 30s }
-        - analysis:
-            templates:
-              - templateName: health-check-analysis
         - setWeight: 100
       maxSurge: 1
       maxUnavailable: 0
