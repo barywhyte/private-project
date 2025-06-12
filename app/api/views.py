@@ -4,9 +4,10 @@ from django.http import JsonResponse
 
 def health(request):
     # Simulate failure
-    return JsonResponse({"status": "not good at all!"}, status=503)
+    return JsonResponse({"status": "temporarily not ready"}, status=503)
+
     #return JsonResponse({"status": "ok!"})
 
 def info(request):
-    return JsonResponse({"app": "Django API", "version": "2.7.0"})
+    return JsonResponse({"app": "Django API", "version": "2.8.0"})
 
