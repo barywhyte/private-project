@@ -51,8 +51,8 @@ spec:
     blueGreen:
       activeService: {{ .Chart.Name }}
       previewService: {{ .Chart.Name }}-preview
-      autoPromotionEnabled: false
-      scaleDownDelayRevisionLimit: 2  # Keep last 2 revisions for rollback
+      autoPromotionEnabled: true
+      scaleDownDelayRevisionLimit: 5  # Keep last 2 revisions for rollback
 
 
       # Add both pre and post promotion analysis
