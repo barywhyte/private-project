@@ -4,5 +4,5 @@ helm:
     value: docker.io/barywhyte/api
     forcestring: true
   - name: image.tag
-    value: cc6297bd
+    value: ebea2784
     forcestring: true
