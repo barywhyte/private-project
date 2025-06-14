@@ -4,7 +4,7 @@ metadata:
   name: {{ .Chart.Name }}
   namespace: {{ .Values.namespace }}
 spec:
-  revisionHistoryLimit: 5
+  revisionHistoryLimit: 2
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
@@ -52,7 +52,7 @@ spec:
       activeService: {{ .Chart.Name }}
       previewService: {{ .Chart.Name }}-preview
       autoPromotionEnabled: true
-      scaleDownDelayRevisionLimit: 5  # Keep last 2 revisions for rollback
+      scaleDownDelayRevisionLimit: 2  # Keep last 2 revisions for rollback
 
 
       # Add both pre and post promotion analysis
