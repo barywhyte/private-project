@@ -1,13 +1,14 @@
 from django.shortcuts import render
-
 from django.http import JsonResponse
 
-def health(request):
-    # Simulate failure
-    #return JsonResponse({"status": "temporarily not ready"}, status=500)
+def is_app_healthy():
+    return True
 
-    return JsonResponse({"status": "ok!"})
+def health(request):
+    if is_app_healthy():
+        return JsonResponse({"status": "ok!"}, status=200)
+    else:
+        return JsonResponse({"status": "temporarily not ready"}, status=500)
 
 def info(request):
-    return JsonResponse({"app": "Django API", "version": "3.3.0"})
-
+    return JsonResponse({"app": "Django API", "version": "3.4.0"})
