@@ -56,9 +56,9 @@ spec:
 
 
       # Add both pre and post promotion analysis
-      prePromotionAnalysis:
-        templates:
-          - templateName: health-check-analysis
+      #prePromotionAnalysis:
+      #  templates:
+      #    - templateName: health-check-analysis
       postPromotionAnalysis:  # REQUIRED for rollback after traffic switch
         templates:
           - templateName: health-check-analysis
