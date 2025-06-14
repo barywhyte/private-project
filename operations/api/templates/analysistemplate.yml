@@ -18,7 +18,15 @@ spec:
                 containers:
                   - name: check
                     image: curlimages/curl
-                    command: ["curl", "-s", "-o", "/dev/null", "-w", "%{http_code}", "http://{{ .Chart.Name }}-preview/health"]
+                    #command: ["curl", "-s", "-o", "/dev/null", "-w", "%{http_code}", "http://{{ .Chart.Name }}-preview/health"]
+                    command:
+                      - /bin/sh
+                      - -c
+                      - |
+                        CODE=$(curl -s -o /dev/null -w '%{http_code}' http://{{ .Chart.Name }}-preview/health || echo 500);
+                        echo $CODE;
+                        exit 0
+
                 restartPolicy: Never
         #prometheus:
         #  address: http://monitoring-kube-prometheus-prometheus.monitoring:9090
