@@ -11,4 +11,4 @@ def health(request):
         return JsonResponse({"status": "temporarily not ready"}, status=500)
 
 def info(request):
-    return JsonResponse({"app": "Django API", "version": "3.4.0"})
+    return JsonResponse({"app": "Django API", "version": "3.5.0"})
