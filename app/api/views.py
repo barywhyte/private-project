@@ -1,14 +1,10 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 
-def is_app_healthy():
-    return True # Simulate a health check function; replace with actual logic
 
 def health(request):
-    if is_app_healthy():
-        return JsonResponse({"status": "ok!"}, status=200)
-    else:
-        return JsonResponse({"status": "temporarily not ready"}, status=500)
+    return JsonResponse({'status': 'something went wrong'}, status=500)
+    #return JsonResponse({'status': 'all good!'}, status=200)
 
 def info(request):
-    return JsonResponse({"app": "Django API", "version": "3.5.0"})
+    return JsonResponse({"app": "Django API", "version": "3.6.0"})
