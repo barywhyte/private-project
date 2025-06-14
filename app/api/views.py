@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 
 def is_app_healthy():
-    return False # Simulate a health check function; replace with actual logic
+    return True # Simulate a health check function; replace with actual logic
 
 def health(request):
     if is_app_healthy():
