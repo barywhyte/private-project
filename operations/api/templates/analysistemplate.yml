@@ -23,7 +23,7 @@ spec:
                       - /bin/sh
                       - -c
                       - |
-                        CODE=$(curl -s -o /dev/null -w '%{http_code}' http://{{ .Chart.Name-fake }}-preview/health || echo 500);
+                        CODE=$(curl -s -o /dev/null -w '%{http_code}' http://{{ .Chart.Name }}-preview-fake/health || echo 500);
                         echo $CODE;
                         exit 0
 
