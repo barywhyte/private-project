@@ -11,7 +11,7 @@ containerPort: 8000
 
 readinessProbe:
   enabled: true
-  path: /health
+  path: /info
   initialDelaySeconds: 5
   periodSeconds: 10
   failureThreshold: 3
