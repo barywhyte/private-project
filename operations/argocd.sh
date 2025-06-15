@@ -21,3 +21,14 @@ helm upgrade --install argocd argo/argo-cd \
 # Install argocd-rollouts
 kubectl create namespace argo-rollouts
 kubectl apply -n argo-rollouts -f https://github.com/argoproj/argo-rollouts/releases/latest/download/install.yaml
+
+
+# Install Loki for logging
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+
+helm install loki grafana/loki --namespace monitoring --create-namespace
+
+# Install Promtail for log collection
+helm install promtail grafana/promtail --namespace monitoring --set "loki.serviceName=loki"
+

@@ -18,14 +18,7 @@ spec:
                 containers:
                   - name: check
                     image: curlimages/curl
-                    #command: ["curl", "-s", "-o", "/dev/null", "-w", "%{http_code}", "http://{{ .Chart.Name }}-preview/health"]
-                    command:
-                      - /bin/sh
-                      - -c
-                      - |
-                        curl -s -o /dev/null -w '%{http_code}' http://{{ .Chart.Name }}-preview/health
-
-
+                    command: ["curl", "-s", "-o", "/dev/null", "-w", "%{http_code}", "http://{{ .Chart.Name }}-preview/health"]
 
                 restartPolicy: Never
         #prometheus:
