@@ -6,8 +6,8 @@ metadata:
 spec:
   metrics:
     - name: health-check
-      #interval: 30s
-      #count: 3
+      interval: 30s
+      count: 3
       failureLimit: 1
       successCondition: result == 200
       provider:
