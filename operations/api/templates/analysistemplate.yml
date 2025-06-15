@@ -18,7 +18,18 @@ spec:
                 containers:
                   - name: check
                     image: curlimages/curl
-                    command: ["curl", "-s", "-o", "/dev/null", "-w", "%{http_code}", "http://{{ .Chart.Name }}-preview/health"]
+                    #command: ["curl", "-s", "-o", "/dev/null", "-w", "%{http_code}", "http://{{ .Chart.Name }}-preview/health"]
+                    command:
+                      - sh
+                      - -c
+                      - |
+                        for i in {1..5}; do
+                          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://api-preview/health) || true
+                          echo $HTTP_CODE
+                          if [ "$HTTP_CODE" == "200" ]; then exit 0; fi
+                          sleep 5
+                        done
+                        exit 1
 
                 restartPolicy: Never
         #prometheus:
