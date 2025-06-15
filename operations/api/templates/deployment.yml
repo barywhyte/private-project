@@ -53,7 +53,7 @@ spec:
       activeService: {{ .Chart.Name }}
       previewService: {{ .Chart.Name }}-preview
       autoPromotionEnabled: true
-      scaleDownDelayRevisionLimit: 2  # Keep last 2 revisions for rollback
+      #scaleDownDelayRevisionLimit: 2  # Keep last 2 revisions for rollback
 
 
       # Add both pre and post promotion analysis
