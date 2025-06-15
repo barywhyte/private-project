@@ -3,7 +3,7 @@ from django.http import JsonResponse
 
 
 def health(request):
-    return JsonResponse({'status': 'something went wrong'}, status=500)
+    return JsonResponse({'status': 'something went bad'}, status=500)
     #return JsonResponse({'status': 'all good!'}, status=200)
 
 def info(request):
