@@ -9,36 +9,26 @@ spec:
       interval: 30s
       count: 3
       failureLimit: 1
-      successCondition: result == 200
+      successCondition: result[0] >= 90
       provider:
-        job:
-          spec:
-            template:
-              spec:
-                containers:
-                  - name: check
-                    image: curlimages/curl
-                    #command: ["curl", "-s", "-o", "/dev/null", "-w", "%{http_code}", "http://{{ .Chart.Name }}-preview/health"]
-                    command:
-                      - sh
-                      - -c
-                      - |
-                        for i in {1..5}; do
-                          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://api-preview/health) || true
-                          echo $HTTP_CODE
-                          if [ "$HTTP_CODE" == "200" ]; then exit 0; fi
-                          sleep 5
-                        done
-                        exit 1
+        prometheus:
+          address: http://monitoring-kube-prometheus-prometheus.monitoring:9090
+          query: |
+            (
+              sum(rate(django_http_responses_total_by_status_total{service='api-preview', status='200'}[5m]))
+              /
+              sum(rate(django_http_responses_total_by_status_total{service='api-preview'}[5m]))
+            ) * 100
+
+
+
+        #job:
+        #  spec:
+        #    template:
+        #      spec:
+        #        containers:
+        #          - name: check
+        #            image: curlimages/curl
+        #            command: ["curl", "-s", "-o", "/dev/null", "-w", "%{http_code}", "http://{{ .Chart.Name }}-preview/health"]
 
                 restartPolicy: Never
-        #prometheus:
-        #  address: http://monitoring-kube-prometheus-prometheus.monitoring:9090
-        #  query: |
-        #     sum(rate(django_http_responses_total_by_status_total{status=~"5.."}[1m]))
-
-            #(
-            #  sum by () (rate(django_http_responses_total_by_status_total{status="200"}[1m]))
-            #  /
-            #  sum by () (rate(django_http_responses_total_by_status_total[5m]))
-            #) * 100
