@@ -8,6 +8,6 @@ for rollout in $ROLLOUTS; do
   echo "Rollout: $rollout => Phase: $phase"
   if [ "$phase" == "Degraded" ]; then
     echo "Aborting rollout $rollout"
-    kubectl argo rollouts abort $rollout -n $NAMESPACE
+    kubectl-argo-rollouts abort $rollout -n $NAMESPACE
   fi
 done
