@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: dashboard
-          image: argoproj/kubectl-argo-rollouts:v1.8.1
+          image: hubimage/quay-io-argoproj-kubectl-argo-rollouts:v1.8.3
           args: ["dashboard", "--namespace=api"]
           ports:
             - containerPort: 3100
@@ -59,4 +59,5 @@ spec:
                 name: argo-rollouts-dashboard
                 port:
                   number: 3100
+
 
