@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argo-rollouts-dashboard
+  namespace: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: argo-rollouts-dashboard
+  template:
+    metadata:
+      labels:
+        app: argo-rollouts-dashboard
+    spec:
+      containers:
+        - name: dashboard
+          image: argoproj/kubectl-argo-rollouts:v1.8.1
+          args: ["dashboard", "--namespace=api"]
+          ports:
+            - containerPort: 3100
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: argo-rollouts-dashboard
+  namespace: api
+spec:
+  selector:
+    app: argo-rollouts-dashboard
+  ports:
+    - port: 3100
+      targetPort: 3100
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argo-rollouts-dashboard-ingress
+  namespace: api
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+    - hosts:
+        - baryrollout.duckdns.org
+      secretName: baryrollout-tls
+
+  rules:
+    - host: baryrollout.duckdns.org
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argo-rollouts-dashboard
+                port:
+                  number: 3100
+
