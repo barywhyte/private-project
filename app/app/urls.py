@@ -7,5 +7,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('health', views.health),
     path('info', views.info),
+    path('', views.home),  # This will serve the index.html at the root URL
     path('', include('django_prometheus.urls')),  # ← this adds /metrics
 ]

@@ -8,3 +8,6 @@ def health(request):
 
 def info(request):
     return JsonResponse({"app": "Django API", "version": "5.2.0"})
+
+def home(request):
+    return render(request, 'index.html', {'title': 'This Site Is Under Maintenance. Please Check Back Later.'})
