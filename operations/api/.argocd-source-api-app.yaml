@@ -1,8 +1,0 @@
-helm:
-  parameters:
-  - name: image.name
-    value: docker.io/barywhyte/api
-    forcestring: true
-  - name: image.tag
-    value: 8605618a
-    forcestring: true
