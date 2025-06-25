@@ -43,32 +43,12 @@ build_image:
     - echo "##[section] Generating Reports for HIGH and CRITICAL Vulnerabilities"
     - ./trivy image --scanners vuln --vuln-type library --severity HIGH,CRITICAL  --format template --template "@contrib/gitlab.tpl" -o gl-container-scanning-report.json $IMAGE_NAME:$IMAGE_TAG
 
+    # generate sbom
+    - trivy image --format cyclonedx --output sbom.json $IMAGE_NAME:$IMAGE_TAG
   allow_failure: true
   artifacts:
     reports:
       container_scanning: gl-container-scanning-report.json
-
-
-# generate sbom
-generate_sbom:
-  stage: security
-  image: ghcr.io/anchore/syft:latest
-  script:
-    - syft "$IMAGE_NAME:$IMAGE_TAG" -o json > sbom.json
-  needs: [build_image]
-    #- job: build_image
-
-# run infra code scanning
-checkov_scan_infra:
-  stage: security
-  image: bridgecrew/checkov:latest
-  script:
-    - git fetch origin infra
-    - git checkout origin/infra
-    - checkov -d . -o cli
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
-  needs: [generate_sbom]
 
 # run manifests scanning for misconfig
 checkov_scan_operations:
@@ -80,7 +60,19 @@ checkov_scan_operations:
     - checkov -d . -o cli
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
-  needs: [checkov_scan_infra]
+  needs: [build_image]
+
+# run infra code scanning
+checkov_scan_infra:
+  stage: security
+  image: bridgecrew/checkov:latest
+  script:
+    - git fetch origin infra
+    - git checkout origin/infra
+    - checkov -d . -o cli
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  needs: [checkov_scan_operations]
 
 
 push_image:
