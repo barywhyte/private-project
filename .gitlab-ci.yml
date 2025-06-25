@@ -46,7 +46,9 @@ build_image:
 # run vulnerabilities scanning
 trivy_scan:
   stage: security
-  image: aquasec/trivy:latest
+  image:
+    name: aquasec/trivy:latest
+    entrypoint: [""]
   variables:
     IMAGE_NAME: "docker.io/barywhyte/api"
     IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
