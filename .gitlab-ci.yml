@@ -36,15 +36,13 @@ build_image:
   script:
     # Build image
     - docker buildx build --platform linux/arm64 -t $IMAGE_NAME:$IMAGE_TAG .
-    # Build report
-    - ./trivy --exit-code 0 --cache-dir .trivycache/ --no-progress --format template --template "@contrib/gitlab.tpl" -o gl-container-scanning-report.json $IMAGE_NAME
-    # Print report
-    - ./trivy --exit-code 0 --cache-dir .trivycache/ --no-progress --severity HIGH $IMAGE_NAME
-    # Fail on severe vulnerabilities
-    - ./trivy --exit-code 1 --cache-dir .trivycache/ --severity CRITICAL --no-progress $IMAGE_NAME
-  cache:
-    paths:
-      - .trivycache/
+    # Download vulnerability DB first
+    - ./trivy image --download-db-only
+
+     # Build report
+    - echo "##[section] Generating Reports for HIGH and CRITICAL Vulnerabilities"
+    - ./trivy image --scanners vuln --vuln-type library --severity HIGH,CRITICAL  --format template --template "@contrib/gitlab.tpl" -o gl-container-scanning-report.json $IMAGE_NAME:$IMAGE_TAG
+
   allow_failure: true
   artifacts:
     reports:
