@@ -17,7 +17,7 @@ run_test:
   script:
     - pytest
 
-# Second job run build and push image
+# Second job run build and scan vulnerabilities
 build_image:
   stage: build
   variables:
@@ -29,34 +29,27 @@ build_image:
     - docker:28.2.2-dind
 
   before_script:
-    - docker info
-    - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
+    - export TRIVY_VERSION=$(wget -qO - "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
+    - echo $TRIVY_VERSION
+    - wget --no-verbose https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz -O - | tar -zxvf -
 
   script:
-    - docker buildx build --platform linux/arm64 -t $IMAGE_NAME:$IMAGE_TAG --load .
-    #- docker push "$IMAGE_NAME:$IMAGE_TAG"
+    # Build image
+    - docker buildx build --platform linux/arm64 -t $IMAGE_NAME:$IMAGE_TAG .
+    # Build report
+    - ./trivy --exit-code 0 --cache-dir .trivycache/ --no-progress --format template --template "@contrib/gitlab.tpl" -o gl-container-scanning-report.json $IMAGE_NAME
+    # Print report
+    - ./trivy --exit-code 0 --cache-dir .trivycache/ --no-progress --severity HIGH $IMAGE_NAME
+    # Fail on severe vulnerabilities
+    - ./trivy --exit-code 1 --cache-dir .trivycache/ --severity CRITICAL --no-progress $IMAGE_NAME
+  cache:
+    paths:
+      - .trivycache/
+  allow_failure: true
+  artifacts:
+    reports:
+      container_scanning: gl-container-scanning-report.json
 
-    # Tag as "latest" ONLY if this is the default branch
-    #- |
-    #  if [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
-    #    docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest
-    #    docker push $IMAGE_NAME:latest
-    #  fi
-
-# run vulnerabilities scanning
-trivy_scan:
-  stage: security
-  image:
-    name: aquasec/trivy:latest
-    entrypoint: [""]
-  variables:
-    IMAGE_NAME: "docker.io/barywhyte/api"
-    IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
-  script:
-    - trivy version
-    - trivy image --exit-code 1 --severity HIGH,CRITICAL "${IMAGE_NAME}:${CI_COMMIT_SHORT_SHA}" || exit 1
-  allow_failure: false
-  needs: [build_image]
 
 # generate sbom
 generate_sbom:
@@ -64,7 +57,7 @@ generate_sbom:
   image: ghcr.io/anchore/syft:latest
   script:
     - syft "$IMAGE_NAME:$IMAGE_TAG" -o json > sbom.json
-  needs: [build_image, trivy_scan]
+  needs: [build_image]
     #- job: build_image
 
 # run infra code scanning
@@ -107,7 +100,7 @@ push_image:
     - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
 
   script:
-    - docker buildx build --platform linux/arm64 -t $IMAGE_NAME:$IMAGE_TAG --load .
+    - docker buildx build --platform linux/arm64 -t $IMAGE_NAME:$IMAGE_TAG .
     - docker push "$IMAGE_NAME:$IMAGE_TAG"
 
      Tag as "latest" ONLY if this is the default branch
