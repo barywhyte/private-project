@@ -44,7 +44,7 @@ build_image:
     - ./trivy image --scanners vuln --vuln-type library --severity HIGH,CRITICAL  --format template --template "@contrib/gitlab.tpl" -o gl-container-scanning-report.json $IMAGE_NAME:$IMAGE_TAG
 
     # generate sbom
-    - trivy image --format cyclonedx --output sbom.json $IMAGE_NAME:$IMAGE_TAG
+    - ./trivy image --format cyclonedx --output sbom.json $IMAGE_NAME:$IMAGE_TAG
   allow_failure: true
   artifacts:
     reports:
