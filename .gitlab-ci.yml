@@ -39,3 +39,44 @@ build_image:
         docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest
         docker push $IMAGE_NAME:latest
       fi
+
+# run vulnerabilities scanning
+trivy_scan:
+  stage: security
+  image: aquasec/trivy:latest
+  script:
+    - trivy version
+    - trivy image --exit-code 1 --severity HIGH,CRITICAL "${IMAGE_NAME}:${CI_COMMIT_SHORT_SHA}" || exit 1
+  allow_failure: false
+  needs: [build_image]
+
+# run infra code scanning
+checkov_scan_infra:
+  stage: test
+  image: bridgecrew/checkov:latest
+  script:
+    - git fetch origin infra
+    - git checkout origin/infra
+    - checkov -d . -o cli
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+
+# run manifests scanning for misconfig
+checkov_scan_operations:
+  stage: test
+  image: bridgecrew/checkov:latest
+  script:
+    - git fetch origin operations
+    - git checkout origin/operations
+    - checkov -d . -o cli
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+
+# generate sbom
+generate_sbom:
+  stage: build
+  image: ghcr.io/anchore/syft:latest
+  script:
+    - syft "$IMAGE_NAME:$IMAGE_TAG" -o json > sbom.json
+  needs:
+    - job: build_image
