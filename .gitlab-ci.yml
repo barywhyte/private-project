@@ -54,7 +54,7 @@ trivy_scan:
 
 # run infra code scanning
 checkov_scan_infra:
-  stage: test
+  stage: security
   image: bridgecrew/checkov:latest
   script:
     - git fetch origin infra
@@ -62,10 +62,11 @@ checkov_scan_infra:
     - checkov -d . -o cli
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
+  needs: [trivy_scan]
 
 # run manifests scanning for misconfig
 checkov_scan_operations:
-  stage: test
+  stage: security
   image: bridgecrew/checkov:latest
   script:
     - git fetch origin operations
@@ -73,6 +74,7 @@ checkov_scan_operations:
     - checkov -d . -o cli
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
+  needs: [checkov_scan_infra]
 
 # generate sbom
 generate_sbom:
@@ -80,6 +82,6 @@ generate_sbom:
   image: ghcr.io/anchore/syft:latest
   script:
     - syft "$IMAGE_NAME:$IMAGE_TAG" -o json > sbom.json
-  needs:
-    - job: build_image
+  needs: [checkov_scan_operations]
+    #- job: build_image
 
