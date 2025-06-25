@@ -1,7 +1,8 @@
 stages:
   - test
-  - security
   - build
+  - security
+
 
 
 # First job run test
@@ -81,3 +82,4 @@ generate_sbom:
     - syft "$IMAGE_NAME:$IMAGE_TAG" -o json > sbom.json
   needs:
     - job: build_image
+
