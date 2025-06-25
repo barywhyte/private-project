@@ -78,7 +78,7 @@ checkov_scan_operations:
 
 # generate sbom
 generate_sbom:
-  stage: build
+  stage: security
   image: ghcr.io/anchore/syft:latest
   script:
     - syft "$IMAGE_NAME:$IMAGE_TAG" -o json > sbom.json
