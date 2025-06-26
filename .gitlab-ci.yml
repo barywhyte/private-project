@@ -15,7 +15,7 @@ checkov_scan_manifests:
     - echo "Checkov version"
     - echo $(checkov --version)
     - echo "Running Checkov scan on Kubernetes manifests"
-    - checkov -d . -o json --quiet > full_checkov_output.json
+    - checkov -d . --skip-download --skip-results-upload --compact -o json > full_checkov_output.json
     - cat full_checkov_output.json | jq '.results.failed_checks[] | {check_id, check_name, file_path, resource, guideline}' > checkov_results.txt
   allow_failure: true
   artifacts:
