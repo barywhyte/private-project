@@ -53,7 +53,9 @@ build_image:
 # run manifests scanning for misconfig
 checkov_scan_operations:
   stage: security
-  image: bridgecrew/checkov:latest
+  image:
+    name: bridgecrew/checkov:latest
+    entrypoint: [""]
   script:
     - git fetch origin operations
     - git checkout origin/operations
