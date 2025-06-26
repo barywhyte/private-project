@@ -6,11 +6,14 @@ checkov_scan_manifests:
   image:
     name: bridgecrew/checkov:latest
     entrypoint: [""]
+  variables:
+    BC_SKIP_MAPPING: "true"  # Critical fix to skip authentication
+    BC_API_KEY: "skip"        # Backup solution
   script:
     -  echo "Installing Checkov and dependencies"
     - apt-get update && apt-get install -y jq
-    - echo "Disable Bridgecrew credentials"
-    - rm ~/.bridgecrew/credentials
+    - echo "Checkov version"
+    - echo $(checkov --version)
     - echo "Running Checkov scan on Kubernetes manifests"
     - checkov -d . -o json > full_checkov_output.json
     - cat full_checkov_output.json | jq '.results.failed_checks[] | {check_id, check_name, file_path, resource, guideline}' > checkov_results.txt
