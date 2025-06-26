@@ -33,6 +33,8 @@ build_and_scan_image:
       container_scanning: gl-container-scanning-report.json
     paths:
       - sbom.json
+  needs:
+    - run_test
 
 push_image:
   stage: release
