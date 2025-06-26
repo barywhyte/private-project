@@ -4,7 +4,7 @@ stages:
 checkov_scan_manifests:
   stage: security
   image:
-    name: bridgecrew/checkov:3.2.436
+    name: bridgecrew/checkov:3.2.447
     entrypoint: [""]
   variables:
     BC_SKIP_MAPPING: "true"  # Critical fix to skip authentication
