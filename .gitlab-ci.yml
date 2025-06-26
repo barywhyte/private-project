@@ -1,0 +1,19 @@
+stages:
+  - security
+
+# run manifests scanning for misconfig
+checkov_scan_manifests:
+  stage: security
+  image:
+    name: bridgecrew/checkov:latest
+    entrypoint: [""]
+  script:
+    - echo "Running Checkov scan on Kubernetes manifests"
+    - checkov -d . -o cli
+  allow_failure: true
+  artifacts:
+    paths:
+      - checkov_results.txt
+    expire_in: 1 week
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "operations"'
