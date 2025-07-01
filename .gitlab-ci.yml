@@ -8,7 +8,6 @@ checkov_scan_manifests:
     entrypoint: [""]
   variables:
     BC_SKIP_MAPPING: "true"  # Critical fix to skip authentication
-    #BC_API_KEY: "skip"        # Backup solution
   script:
     -  echo "Installing Checkov and dependencies"
     - apt-get update && apt-get install -y jq
