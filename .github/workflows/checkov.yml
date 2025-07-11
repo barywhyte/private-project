@@ -1,0 +1,43 @@
+name: Checkov Security Scan
+
+on:
+  push:
+    branches:
+      - operations
+
+jobs:
+  checkov_scan:
+    name: Run Checkov on Kubernetes Manifests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: Run Checkov scan
+        run: |
+          echo "Running Checkov scan in Docker container"
+          docker run --rm \
+            -v ${{ github.workspace }}:/repo \
+            -w /repo \
+            -e BC_SKIP_MAPPING=true \
+            bridgecrew/checkov:3.2.447 \
+            checkov -d operations/api --skip-download --skip-results-upload --compact -o json > full_checkov_output.json || true
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Parse and print failed checks
+        run: |
+          cat full_checkov_output.json | jq '.[] | .results.failed_checks[] | select(.check_result.result == "FAILED") | {check_id, check_name, file_path, resource, guideline}'
+
+      #- name: Upload Checkov output
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: checkov-results
+      #    path: |
+      #      full_checkov_output.json
+      #    retention-days: 7
