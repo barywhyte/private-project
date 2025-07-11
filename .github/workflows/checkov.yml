@@ -21,6 +21,7 @@ jobs:
         run: |
           echo "Running Checkov scan in Docker container"
           docker run --rm \
+            --entrypoint "" \
             -v ${{ github.workspace }}:/repo \
             -w /repo \
             -e BC_SKIP_MAPPING=true \
@@ -34,10 +35,10 @@ jobs:
         run: |
           cat full_checkov_output.json | jq '.[] | .results.failed_checks[] | select(.check_result.result == "FAILED") | {check_id, check_name, file_path, resource, guideline}'
 
-      #- name: Upload Checkov output
-      #  uses: actions/upload-artifact@v4
-      #  with:
-      #    name: checkov-results
-      #    path: |
-      #      full_checkov_output.json
-      #    retention-days: 7
+      - name: Upload Checkov output
+        uses: actions/upload-artifact@v4
+        with:
+          name: checkov-results
+          path: |
+            full_checkov_output.json
+          retention-days: 7
