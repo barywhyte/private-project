@@ -30,10 +30,10 @@ def health(request):
     return JsonResponse({'status': 'all good!'}, status=200)
 
 def info(request):
-    return JsonResponse({"app": "Django API", "version": "5.3.0"})
+    return JsonResponse({"app": "Django API", "version": "5.4.0"})
 
 def home(request):
-    return render(request, 'index.html', {'title': 'This Site Is Under Maintenance. Please Check Back Later. Thank you!'})
+    return render(request, 'index.html', {'title': 'This Site Is Under Maintenance. Please Check Back Later.'})
 
 def post(request, id=None):
     if id is None:
