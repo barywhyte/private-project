@@ -22,18 +22,17 @@ posts = [
 ]
 
 
-
-
-
 def health(request):
     #return JsonResponse({'status': 'something went wrong'}, status=500)
     return JsonResponse({'status': 'all good!'}, status=200)
 
 def info(request):
-    return JsonResponse({"app": "Django API", "version": "5.4.0"})
+    return JsonResponse({"app": "Django API", "version": "5.5.0"})
 
 def home(request):
-    return render(request, 'index.html', {'title': 'This Site Is Under Maintenance. Please Check Back Later.'})
+    return render(request, 'index.html', {'title': 'This API Is Under Maintenance. Please Check Back Later.'})
+def contact(request):
+    return render(request, 'contact.html', {})
 
 def post(request, id=None):
     if id is None:
