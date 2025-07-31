@@ -31,8 +31,14 @@ def info(request):
 
 def home(request):
     return render(request, 'index.html', {'title': 'This API Is Under Maintenance. Please Check Back Later.'})
-def contact(request):
-    return render(request, 'contact.html', {})
+def about_me(request):
+    message = {
+        "me": "This is a little about me and my background. I am a Senior Infra and MLOPS Engineer. I am reachable on ",
+        "mobile": 2348064686716,
+        "email": "seunsamore@gmail.com",
+        "my_list" : ["Python", "Django", "Machine Learning", "DevOps", "Cloud Computing"]
+        }
+    return render(request, 'about.html', message)
 
 def post(request, id=None):
     if id is None:

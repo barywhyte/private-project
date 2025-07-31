@@ -1,0 +1,22 @@
+{% extends "base-page.html" %}
+
+{% block content %}
+<h1>How to reach us</h1>
+<!--Contact us on +2348064686716 or send a message to seunsamore@gmail.com-->
+<p>
+    {{ me }} <!--{{ mobile }}, {{ email }}-->
+</p>
+<ul>
+    <li>Mobile: {{ mobile }}</li>
+    <li>Email: <a href="mailto:{{ email }}">{{ email }}</a></li>
+</ul>
+{% for item in my_list %}
+    <li>{{ forloop.counter }}.  {{ item }}</li>
+{% endfor %}
+<p>Thank you for visiting!</p>
+<p>We look forward to hearing from you.</p>
+<p>Best regards,</p>
+<p>Your Team</p>
+<p>Powered by Django</p>
+<p>Version: 5.5.0</p>
+{% endblock %}
