@@ -8,10 +8,16 @@
 </p>
 <ul>
     <li>Mobile: {{ mobile }}</li>
-    <li>Email: <a href="mailto:{{ email }}">{{ email }}</a></li>
+    <li>Email: <a href="mailto:{{ email }}">{{ email|upper }}</a></li>
 </ul>
 {% for item in my_list %}
+    {% if item == 10 %}
+        <li>{{ forloop.counter }}. {{ item|add:22 }}</li>
+    {% elif item == "Machine Learning" %}
+        <li>{{ forloop.counter }}. MLOPS</li>
+    {% else %}
     <li>{{ forloop.counter }}.  {{ item }}</li>
+    {% endif %}
 {% endfor %}
 <p>Thank you for visiting!</p>
 <p>We look forward to hearing from you.</p>

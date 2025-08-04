@@ -1,0 +1,10 @@
+{% extends "base-page.html" %}
+
+{% block content %}
+<script>
+        window.onload = function() {
+            alert("🎉 Congratulations! Your post was created.");
+            window.location.href = "{% url 'home' %}";  // Redirect after OK
+        }
+    </script>
+{% endblock %}

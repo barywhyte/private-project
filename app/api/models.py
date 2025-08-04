@@ -10,3 +10,5 @@ class Api(models.Model):
     author = models.CharField(max_length=50, default='Anonymous')
     description = models.TextField(blank=True, null=True)
     featured = models.BooleanField(default=False)
+
+
