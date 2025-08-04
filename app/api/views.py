@@ -11,7 +11,7 @@ def health(request):
     return JsonResponse({'status': 'all good!'}, status=200)
 
 def info(request):
-    return JsonResponse({"app": "Django API", "version": "5.5.0"})
+    return JsonResponse({"app": "Django API", "version": "6.0.0"})
 
 def home(request):
 
