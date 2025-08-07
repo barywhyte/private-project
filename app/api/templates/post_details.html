@@ -1,0 +1,8 @@
+{% extends "base-page.html" %}
+
+{% block content %}
+  <h2>{{ post.title }}</h2>
+  <p><strong>Author:</strong> {{ post.author }}</p>
+  <p>{{ post.contents }}</p>
+  <a href="{% url 'list_all_posts' %}">Back to all posts</a>
+{% endblock %}

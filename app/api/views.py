@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.http import HttpResponse
 from .forms import PostForm, RawForm
@@ -11,7 +11,7 @@ def health(request):
     return JsonResponse({'status': 'all good!'}, status=200)
 
 def info(request):
-    return JsonResponse({"app": "Django API", "version": "6.0.0"})
+    return JsonResponse({"app": "Django API", "version": "6.1.0"})
 
 def home(request):
 
@@ -40,19 +40,19 @@ def create_post(request):
 
 def post_details(request, id):
 
-    try:
-        obj = Api.objects.get(id=id)
-        post_content = {
-            "title": obj.title,
-            "content": obj.contents,
-            "price": obj.price,
-            "author": obj.author,
-            "description": obj.description,
-            "featured": obj.featured
-        }
-        return render(request, 'index.html', post_content)
-    except Api.DoesNotExist:
-        return HttpResponse("Post not found", status=404)
+    post = get_object_or_404(Api, id=id)
+    return render(request, 'post_details.html', {'post': post})
+
+def list_all_posts(request):
+    posts = Api.objects.all()
+    return render(request, 'list_posts.html', {'posts': posts})
+
+def delete_post(request, id):
+    post = get_object_or_404(Api, id=id)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('home')
+    return render(request, 'delete_post.html', {'post': post})
 
 
 
