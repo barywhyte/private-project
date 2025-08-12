@@ -134,3 +134,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CSRF_TRUSTED_ORIGINS = [
     'https://barywhyt.duckdns.org',
 ]
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Where your working static files live during dev
+]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"  # Where collectstatic will copy files for production

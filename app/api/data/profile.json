@@ -1,0 +1,40 @@
+{
+  "name": "Seun Ore",
+  "title": "Senior DevOps & MLOps Engineer",
+  "summary": "Experienced in building and managing large-scale infrastructure, CI/CD pipelines, and AI/ML production workflows.",
+  "skills": [
+    "Python", "Django", "Kubernetes", "Machine Learning",
+    "DevOps", "AWS", "Azure", "CI/CD", "Docker"
+  ],
+  "experience": [
+    {
+      "role": "Senior DevOps Engineer",
+      "company": "TechCorp Ltd",
+      "period": "2021 – Present",
+      "achievements": [
+        "Built Kubernetes clusters handling 1M+ daily requests",
+        "Optimized CI/CD pipelines reducing deployment time by 40%",
+        "Implemented MLOps workflow for AI product launch"
+      ]
+    },
+    {
+      "role": "Cloud Engineer",
+      "company": "CloudWorks",
+      "period": "2018 – 2021",
+      "achievements": [
+        "Migrated 50+ applications to Azure cloud",
+        "Set up secure multi-region deployments",
+        "Led DevOps team for microservices architecture"
+      ]
+    }
+  ],
+  "certifications": [
+    "AWS Certified Solutions Architect",
+    "CKA – Certified Kubernetes Administrator",
+    "Microsoft Azure DevOps Expert"
+  ],
+  "contact": {
+    "email": "seunsamore@gmail.com",
+    "phone": "+2348064686716"
+  }
+}

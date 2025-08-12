@@ -1,0 +1,39 @@
+{% extends 'base-page.html' %}
+
+{% block title %}Professional Profile - {{ name }}{% endblock %}
+
+{% block content %}
+<section class="profile">
+    <h1>{{ name }}</h1>
+    <p><strong>{{ title }}</strong></p>
+
+    <h2>About Me</h2>
+    <p>{{ summary }}</p>
+
+    <h2>Key Skills</h2>
+    <ul>
+        {% for skill in skills %}
+            <li>{{ skill }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Certifications</h2>
+    <ul>
+        {% for cert in certifications %}
+            <li>{{ cert }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Accomplishments</h2>
+    <ul>
+        {% for acc in accomplishments %}
+            <li>{{ acc }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:{{ email }}">{{ email }}</a></p>
+    <p>LinkedIn: <a href="{{ linkedin }}" target="_blank">{{ linkedin }}</a></p>
+    <p>GitHub: <a href="{{ github }}" target="_blank">{{ github }}</a></p>
+</section>
+{% endblock %}

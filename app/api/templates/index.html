@@ -1,18 +1,18 @@
 {% extends "base-page.html" %}
-
 {% block content %}
-<h1>{{ title|title }} (Author: <a href="Author">{{ author }}</a>)</h1>
-<h4>Price: ${{ price }}</h4>
-<h4> Featured: {{ featured }}</h4>
-  <div>
-    {{ content|safe }}
-  </div>
-{% if messages %}
-  <ul class="messages">
-    {% for message in messages %}
-      <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-    {% endfor %}
-  </ul>
-{% endif %}
+  <h2>Latest Articles</h2>
 
+  {% for post in posts %}
+    <div class="mb-4 pb-2 border-bottom">
+      <p>
+        <a href="{% url 'about_me' %}">{{ post.author }}</a> wrote
+      </p>
+      <h3><strong>{{ post.title }}</strong></h3>
+      <small class="text-muted">{{ post.created_at|date:"F j, Y" }}</small>
+      <p class="mt-2">{{ post.contents|truncatewords:100 }}</p>
+      <a href="{% url 'post_details' post.id %}">Read more</a>
+    </div>
+  {% empty %}
+    <p>No articles available.</p>
+  {% endfor %}
 {% endblock %}
