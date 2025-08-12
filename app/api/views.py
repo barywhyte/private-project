@@ -13,7 +13,7 @@ def health(request):
     return JsonResponse({'status': 'all good!'}, status=200)
 
 def info(request):
-    return JsonResponse({"app": "Django API", "version": "6.1.0"})
+    return JsonResponse({"app": "Django API", "version": "6.9.0"})
 
 def home(request):
     posts = Api.objects.all().order_by('-id')  # newest first
