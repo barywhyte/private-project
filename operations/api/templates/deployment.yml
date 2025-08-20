@@ -6,7 +6,7 @@ metadata:
 spec:
   progressDeadlineSeconds: 120
   revisionHistoryLimit: 2
-  replicas: {{ .Values.replicaCount }}
+  replicas: 3 #{{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: {{ .Chart.Name }}
