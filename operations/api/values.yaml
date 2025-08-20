@@ -83,3 +83,6 @@ clusterAuditor:
 
 networkPolicy:
   enabled: true
+
+db:
+  pass: postgres-secret

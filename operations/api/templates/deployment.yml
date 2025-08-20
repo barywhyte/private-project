@@ -20,6 +20,10 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          envFrom:
+            - secretRef:
+                name: {{ .Values.db.pass }}
+
           ports:
             - containerPort: {{ .Values.containerPort }}
           {{- if .Values.readinessProbe.enabled }}
