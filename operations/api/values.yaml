@@ -1,6 +1,6 @@
 fullnameOverride: api
 namespace: api
-replicaCount: 2
+replicaCount: 3
 
 image:
   repository: docker.io/barywhyte/api
