@@ -1,8 +1,10 @@
 __pycache__/
 *.pyc
 .pytest_cache/
-#db.sqlite3
+db.sqlite3
 */bin/activate
 *.log
 *.pid
 *.seed
+sqlite:db.sqlite3
+*local.py
