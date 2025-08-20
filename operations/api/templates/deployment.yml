@@ -20,10 +20,21 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          envFrom:
-            - secretRef:
-                name: {{ .Values.db.pass }}
-
+          env:
+            - name: DATABASE_HOST
+              value: {{ .Values.db.host }}
+            - name: DATABASE_PORT
+              value: "{{ .Values.db.port }}"
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.db.secretname }}
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.db.secretname }}
+                  key: POSTGRES_PASSWORD
           ports:
             - containerPort: {{ .Values.containerPort }}
           {{- if .Values.readinessProbe.enabled }}

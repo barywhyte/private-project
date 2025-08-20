@@ -85,4 +85,6 @@ networkPolicy:
   enabled: true
 
 db:
-  pass: postgres-secret
+  secretname: postgres-secret
+  host: db-postgresql.db.svc.cluster.local
+  port: 5432
