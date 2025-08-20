@@ -21,6 +21,8 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           env:
+            - name: HAHAHAHA
+              value: "hahaha"
             - name: DATABASE_HOST
               value: {{ .Values.db.host }}
             - name: DATABASE_PORT
