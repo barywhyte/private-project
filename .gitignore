@@ -7,4 +7,5 @@ db.sqlite3
 *.pid
 *.seed
 sqlite:db.sqlite3
-*local.py
+#*local.py
+*django/
