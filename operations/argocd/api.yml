@@ -16,8 +16,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://gitlab.com/barywhyte/private-pro.git
-    #repoURL: https://github.com/barywhyte/private-project.git
+    repoURL: https://github.com/barywhyte/private-project.git
     targetRevision: operations
     path: operations/api
     helm:
