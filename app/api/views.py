@@ -9,7 +9,6 @@ from pathlib import Path
 
 
 def health(request):
-    #return JsonResponse({'status': 'something went wrong'}, status=500)
     return JsonResponse({'status': 'all good!'}, status=200)
 
 def info(request):
