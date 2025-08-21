@@ -4,4 +4,3 @@ gunicorn
 pytest
 pytest-django
 django-prometheus==2.3.1
-psycopg2
