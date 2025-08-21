@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://gitlab.com/barywhyte/private-pro.git
+    repoURL: https://github.com/barywhyte/private-pro.git
     targetRevision: operations
     path: operations/argocd
     directory:
