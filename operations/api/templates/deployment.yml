@@ -6,7 +6,7 @@ metadata:
 spec:
   progressDeadlineSeconds: 120
   revisionHistoryLimit: 2
-  replicas: 3 #{{ .Values.replicaCount }}
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: {{ .Chart.Name }}
@@ -21,8 +21,6 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           env:
-            - name: HAHAHAHA
-              value: "hahaha"
             - name: DATABASE_HOST
               value: {{ .Values.db.host }}
             - name: DATABASE_PORT
