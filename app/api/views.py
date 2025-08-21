@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.http import HttpResponse
-from .forms import PostForm, RawForm
+from .forms import PostForm
 from .models import Api
 import json
 from pathlib import Path
@@ -13,7 +13,7 @@ def health(request):
     return JsonResponse({'status': 'all good!'}, status=200)
 
 def info(request):
-    return JsonResponse({"app": "Django API", "version": "6.9.0"})
+    return JsonResponse({"app": "Django API", "version": "7.0.0"})
 
 def home(request):
     posts = Api.objects.all().order_by('-id')  # newest first
