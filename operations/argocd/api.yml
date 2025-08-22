@@ -18,8 +18,8 @@ spec:
 
   source:
     repoURL: https://github.com/barywhyte/private-project.git
-    #targetRevision: operations
-    targetRevision: HEAD
+    targetRevision: operations
+    #targetRevision: HEAD
     path: operations/api
     helm:
       valueFiles:
