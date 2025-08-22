@@ -14,6 +14,7 @@ COPY . .
 
 # Set environment variable for Django settings (pointing to prod)
 ENV DJANGO_SETTINGS_MODULE=app.settings.prod
+ENV PYTHONPATH=/app
 
 # Expose port
 EXPOSE 8000
