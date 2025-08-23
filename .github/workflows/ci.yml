@@ -132,7 +132,7 @@ jobs:
 
       - name: Update image tag in values.yaml
         run: |
-          yq -i ".image.tag = \"${IMAGE_TAG}\"" operations/api/values.yaml
+          yq eval ".image.tag = \"$IMAGE_TAG\"" -i operations/api/values.yaml
 
       - name: Commit and push changes
         run: |
