@@ -133,12 +133,18 @@ jobs:
       - name: Update image tag in values.yaml
         run: |
           yq eval ".image.tag = \"$IMAGE_TAG\"" -i operations/api/values.yaml
+          cat operations/api/values.yaml
 
       - name: Commit and push changes
         run: |
-          git add operations/api/values.yaml
-          git commit -m "Update image tag to $IMAGE_TAG"
-          git push origin operations
+          if ! git diff --quiet operations/api/values.yaml; then
+            git add operations/api/values.yaml
+            git commit -m "Update image tag to $IMAGE_TAG"
+            git push origin operations
+          else
+            echo "No changes to commit"
+          fi
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
