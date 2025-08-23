@@ -132,8 +132,13 @@ jobs:
 
       - name: Update image tag in values.yaml
         run: |
-          yq eval ".image.tag = \"$IMAGE_TAG\"" -i operations/api/values.yaml
+          echo "Updating image tag to $IMAGE_TAG"
+          yq eval ".image.tag = strenv(IMAGE_TAG)" -i operations/api/values.yaml
+          echo $IMAGE_TAG
           cat operations/api/values.yaml
+        env:
+          IMAGE_TAG: ${{ env.IMAGE_TAG }}
+
 
       - name: Commit and push changes
         run: |
