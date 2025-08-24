@@ -3,7 +3,7 @@ namespace: api
 replicaCount: 2
 image:
   repository: docker.io/barywhyte/api
-  tag: ""
+  tag: "e56b1f3"
 imagePullSecret: registrycredentials
 containerPort: 8000
 readinessProbe:
