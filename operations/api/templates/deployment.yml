@@ -17,6 +17,36 @@ spec:
     spec:
       imagePullSecrets:
         - name: {{ .Values.imagePullSecret }}
+
+      initContainers:
+        - name: migrate
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          command: ["sh", "-c"]
+          args:
+            - |
+              echo "Waiting for database..."
+              until nc -z $DATABASE_HOST $DATABASE_PORT; do
+                echo "DB is not ready, sleeping..."
+                sleep 3
+              done
+              echo "DB is ready, running migrations..."
+              python manage.py migrate --settings=app.settings.prod
+          env:
+            - name: DATABASE_HOST
+              value: {{ .Values.db.host }}
+            - name: DATABASE_PORT
+              value: "{{ .Values.db.port }}"
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.db.secretname }}
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.db.secretname }}
+                  key: POSTGRES_PASSWORD
+
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
