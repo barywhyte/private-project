@@ -8,7 +8,7 @@ COPY requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
-RUN apt-get update && apt-get install -y netcat
+RUN apt-get update && apt-get install -y netcat-openbsd
 
 
 # Copy ALL project files
