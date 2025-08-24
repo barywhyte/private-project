@@ -10,10 +10,10 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy ALL project files
-COPY . .
+COPY app/ .
 
 # Set environment variable for Django settings (pointing to prod)
-ENV DJANGO_SETTINGS_MODULE=app.settings.prod
+ENV DJANGO_SETTINGS_MODULE=app.settings.local
 ENV PYTHONPATH=/app
 
 # Expose port
