@@ -5,7 +5,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'local-db',
         'USER': 'seun',
-        'PASSWORD': 'SAMtos2009#',
+        'PASSWORD': 'samtos2009',
         'HOST': 'localhost',
         'PORT': '5432',
      }
