@@ -17,7 +17,8 @@ COPY app/ .
 # Set environment variable for Django settings (pointing to prod)
 ENV DJANGO_SETTINGS_MODULE=app.settings.prod
 ENV PYTHONPATH=/app
-
+# Collect static files
+RUN python manage.py collectstatic --noinput --settings=app.settings.prod
 # Expose port
 EXPOSE 8000
 
