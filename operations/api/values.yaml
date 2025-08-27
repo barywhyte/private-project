@@ -1,21 +1,17 @@
 fullnameOverride: api
 namespace: api
-replicaCount: 3
-
+replicaCount: 2
 image:
   repository: docker.io/barywhyte/api
-  tag: latest
-
+  tag: "e56b1f3"
 imagePullSecret: registrycredentials
 containerPort: 8000
-
 readinessProbe:
   enabled: false
   path: /health
   initialDelaySeconds: 5
   periodSeconds: 10
   failureThreshold: 3
-
 livenessProbe:
   enabled: false
   path: /health
@@ -24,15 +20,12 @@ livenessProbe:
   failureThreshold: 5
   httpHeaders:
     - name: Host
-      #value: barywhyt.duckdns.org
       value: seun.tech
-
 service:
   port: 80
   targetPort: 8000
   name: http
   type: ClusterIP
-
 ingress:
   clusterIssuer: letsencrypt-prod
   class: nginx
@@ -44,14 +37,12 @@ ingress:
       port: 80
     - path: /info
       port: 80
-
 hpa:
   enabled: true
   minReplicas: 2
   maxReplicas: 5
   targetCPUUtilizationPercentage: 70
   targetMemoryUtilizationPercentage: 70
-
 serviceMonitor:
   enabled: true
   namespace: monitoring
@@ -62,7 +53,6 @@ serviceMonitor:
   interval: 15s
   selectorLabels:
     app: api
-
 resources:
   requests:
     memory: "256Mi"
@@ -70,21 +60,16 @@ resources:
   limits:
     memory: "512Mi"
     cpu: "500m"
-
-
 namespaceDeveloper:
   users:
     - dev-user
     - tester
-
 clusterAuditor:
   users:
     - audit-user1
     - audit-user2
-
 networkPolicy:
   enabled: true
-
 db:
   secretname: postgres-secret
   host: db-postgresql.db.svc.cluster.local

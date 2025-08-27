@@ -10,7 +10,8 @@ metadata:
     argocd-image-updater.argoproj.io/barywhyte-api.semver: "false"
     argocd-image-updater.argoproj.io/barywhyte-api.platforms: linux/amd64,linux/arm64,linux/arm64/v8
     argocd-image-updater.argoproj.io/barywhyte-api.pull-secret: argocd/registrycredentials
-    argocd-image-updater.argoproj.io/write-back-method: git
+    argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
+    #argocd-image-updater.argoproj.io/write-back-target: "helmvalues:operations/api/values.yaml"
     argocd-image-updater.argoproj.io/git-branch: operations
 spec:
   project: default
@@ -18,6 +19,7 @@ spec:
   source:
     repoURL: https://github.com/barywhyte/private-project.git
     targetRevision: operations
+    #targetRevision: HEAD
     path: operations/api
     helm:
       valueFiles:
