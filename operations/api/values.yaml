@@ -24,7 +24,8 @@ livenessProbe:
   failureThreshold: 5
   httpHeaders:
     - name: Host
-      value: barywhyt.duckdns.org
+      #value: barywhyt.duckdns.org
+      value: seun.tech
 
 service:
   port: 80
@@ -36,7 +37,7 @@ ingress:
   clusterIssuer: letsencrypt-prod
   class: nginx
   forceSSLRedirect: "true"
-  host: barywhyt.duckdns.org
+  host: seun.tech
   tlsSecret: barywhyt-tls
   paths:
     - path: /health
