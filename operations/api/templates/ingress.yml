@@ -13,10 +13,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - barywhyt.duckdns.org
+        - seun.tech
       secretName: barywhyt-tls
   rules:
-    - host: barywhyt.duckdns.org
+    - host: seun.tech
       http:
         paths:
           - path: /
