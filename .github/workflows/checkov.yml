@@ -37,7 +37,10 @@ jobs:
             .results.failed_checks[]?
             | select(.check_result.result == "FAILED")
             | "\(.check_id): \(.check_name) [\(.file_path)] → \(.guideline)"
-          ' full_checkov_output.json
+          ' full_checkov_output.json || echo "No failed checks found."
+
+          echo "===== SUMMARY ====="
+          jq -r '.summary' full_checkov_output.json
 
       - name: Upload Checkov output
         uses: actions/upload-artifact@v4
