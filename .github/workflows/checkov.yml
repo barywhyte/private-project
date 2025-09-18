@@ -32,7 +32,7 @@ jobs:
             -w /repo \
             -e BC_SKIP_MAPPING=true \
             bridgecrew/checkov:3.2.447 \
-            checkov -d . --framework terraform/ --skip-download --skip-results-upload --compact -o json > full_checkov_output.json || true
+            checkov -d terraform/ --skip-download --skip-results-upload --compact -o json > full_checkov_output.json || true
 
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
